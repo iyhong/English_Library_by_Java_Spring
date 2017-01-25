@@ -28,4 +28,9 @@
  		FROM book
  		WHERE book_code = #{bookCode}
  	</select>
+ 	<update id="updateBookState" parameterType="String">
+ 		UPDATE book SET
+ 			state_no = 3
+		WHERE book_code = #{bookCode}
+ 	</update>
 </mapper>

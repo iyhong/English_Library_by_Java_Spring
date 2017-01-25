@@ -25,4 +25,9 @@ public class BookDao {
 		logger.debug("값:"+sql.selectOne("book.selectOneBookByCode", bookCode));
 		return sql.selectOne("book.selectOneBookByCode", bookCode);
 	}
+	//도서정보수정(폐기로)
+	public int updateBookState(String bookCode){
+		logger.debug("updateBookState() 메서드 호출");
+		return sql.update("book.updateBookState", bookCode);
+	}
 }

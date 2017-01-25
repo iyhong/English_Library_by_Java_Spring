@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.englishlibrary.book.service.Book;
 import kr.co.englishlibrary.book.service.BookCommand;
@@ -14,6 +15,7 @@ import kr.co.englishlibrary.services.Disposal;
 import kr.co.englishlibrary.services.Genre;
 
 @Service
+@Transactional
 public class BookService {
 	@Autowired
 	private BookDao bookDao;
@@ -43,12 +45,15 @@ public class BookService {
 	//폐기등록하는 메서드
 	public int addDisposal(String bookCode){
 		logger.debug("addDisposal() 메서드 호출");
+		int rowCount = 0;
 		//도서코드로 도서정보 가져옴
 		Book book = bookDao.selectOneBookByCode(bookCode);
 		logger.debug("book:"+book);
 		if(book==null){
-			return -1;
+			rowCount = -1;
+			return rowCount;
 		}
+		rowCount += bookDao.updateBookState(bookCode);
 		//disposal에 도서정보 저장
 		Disposal disposal = new Disposal();
 		disposal.setBookCode(book.getBookCode());
@@ -56,7 +61,7 @@ public class BookService {
 		disposal.setDisposalAuthor(book.getBookAuthor());
 		disposal.setGenreNo(book.getGenreNo());
 		disposal.setDisposalPublisher(book.getBookPublisher());
-		int rowCount = dao.insertDisposal(disposal);
+		rowCount += dao.insertDisposal(disposal);
 		return rowCount;
 	}
 }
