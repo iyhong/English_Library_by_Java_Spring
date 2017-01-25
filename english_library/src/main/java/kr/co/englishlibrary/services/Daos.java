@@ -13,15 +13,19 @@ public class Daos {
 	@Autowired
 	private SqlSessionTemplate sql;
 	private static final Logger logger = LoggerFactory.getLogger(Daos.class);
-
+	//장르전체 가져오기
 	public List<Genre> selectAllGenre(){
 		logger.debug("selectAllGenre() 메서드 호출");
 		return sql.selectList("mapper.selectAllGenre");
 	}
-	
+	//지역전체 가져오기
 	public List<Local> selectAllLocal(){
 		logger.debug("selectAllLocal() 메서드 호출");
-		
 		return sql.selectList("mapper.selectAllLocal");
+	}
+	//폐기등록하기
+	public int insertDisposal(Disposal disposal){
+		logger.debug("insertDisposal() 메서드 호출");
+		return sql.insert("mapper.disposalBook", disposal);
 	}
 }

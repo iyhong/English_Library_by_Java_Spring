@@ -18,4 +18,14 @@
  			#{bookPublisher}
  		)
  	</insert>
+ 	<select id="selectOneBookByCode" parameterType="String" resultType="kr.co.englishlibrary.book.service.Book">
+ 		SELECT
+ 			book_code as bookCode,
+ 			book_name as bookName,
+ 			book_author as bookAuthor,
+ 			genre_no as genreNo,
+ 			book_publisher as bookPublisher
+ 		FROM book
+ 		WHERE book_code = #{bookCode}
+ 	</select>
 </mapper>

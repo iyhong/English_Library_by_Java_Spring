@@ -40,4 +40,20 @@ public class BookController {
 		service.addBook(bookCommand, libraryId);
 		return "redirect:/bookAdd";
 	}
+	@RequestMapping(value="/bookDisposal", method=RequestMethod.GET)
+	public String bookDisposal(){
+		logger.debug("bookDisposal GET 메서드 호출");
+		return "/jsp/disposalbook";
+	}
+	@RequestMapping(value="/bookDisposal", method=RequestMethod.POST)
+	public String bookDisposal(String bookCode,Model model){
+		logger.debug("bookDisposal POST 메서드 호출");
+		logger.debug("bookCode:"+bookCode);
+		int result = service.addDisposal(bookCode);
+		if(result == -1){
+			model.addAttribute("message","없는 도서코드입니다.");
+			return "/jsp/fail";
+		}
+		return "redirect:/bookDisposal";
+	}
 }

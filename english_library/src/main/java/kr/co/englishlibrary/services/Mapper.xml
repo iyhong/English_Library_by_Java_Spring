@@ -15,4 +15,21 @@
 			local_name as localName
 		FROM local
 	</select>
+	<insert id="disposalBook" parameterType="kr.co.englishlibrary.services.Disposal">
+		INSERT INTO disposal(
+			book_code,
+			disposal_bookname,
+			disposal_author,
+			genre_no,
+			disposal_publisher,
+			disposal_registerday
+		) VALUES (
+			#{bookCode},
+			#{disposalBookName},
+			#{disposalAuthor},
+			#{genreNo},
+			#{disposalPublisher},
+			sysdate()
+		)
+	</insert>
 </mapper>
