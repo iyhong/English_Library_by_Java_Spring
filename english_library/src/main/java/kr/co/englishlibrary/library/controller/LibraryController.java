@@ -58,6 +58,10 @@ public class LibraryController {
 
 			return "redirect:/";
 		}
-		
+	}
+	@RequestMapping(value="/logout")
+	public String libraryLogout(HttpSession session){
+		session.invalidate();
+		return "redirect:/";
 	}
 }
