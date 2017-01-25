@@ -1,0 +1,12 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="mapper">
+ 	<select id="selectAllGenre" resultType="kr.co.englishlibrary.services.Genre">
+ 		SELECT 
+ 			genre_no as genreNo,
+ 			genre_name as genreName
+ 		FROM genre
+ 	</select>
+</mapper>

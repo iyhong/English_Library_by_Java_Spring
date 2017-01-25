@@ -14,6 +14,7 @@ public class Book {
 	private String bookFirstDay;
 	private String bookTotalDay;
 	private String bookTotalCount;
+	
 	public String getBookCode() {
 		return bookCode;
 	}

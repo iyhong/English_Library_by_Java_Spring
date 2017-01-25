@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -103,20 +105,21 @@ a { /*사이드 글자 색상*/
 <!-- 도서등록 폼 시작 -->
 				<form action="<%= request.getContextPath() %>/bookAdd" method="post">
 					<div>
-						도서명 : <input type="text" name="">
+						도서명 : <input type="text" name="bookName">
 					</div>
 					<div>
-						저자 : <input type="text" name="">
+						저자 : <input type="text" name="bookAuthor">
 					</div>
 					<div>
-						출판사 : <input type="text" name="">
+						출판사 : <input type="text" name="bookPublisher">
 					</div>
 					<div>
 						장르 : 
-						<select>
+						<select name="genre">
 							<option>::선택::</option>
-							<option>소설</option>
-							<option>문학</option>
+							<c:forEach var="g" items="${genreList}">
+								<option>${g.genreName}</option>
+							</c:forEach>
 						</select>
 					</div>
 					<p>
