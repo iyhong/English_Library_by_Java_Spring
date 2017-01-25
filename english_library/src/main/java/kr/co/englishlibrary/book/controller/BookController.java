@@ -2,6 +2,8 @@ package kr.co.englishlibrary.book.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,22 +19,25 @@ import kr.co.englishlibrary.services.Genre;
 public class BookController {
 	private static final Logger logger = LoggerFactory.getLogger(BookController.class);
 	@Autowired
-	private BookService bookService;
+	private BookService service;
 	
+	//도서등록 폼
 	@RequestMapping(value="/bookAdd", method=RequestMethod.GET)
 	public String bookAdd(Model model){
 		logger.debug("bookAdd GET 메서드 호출");
-		List<Genre> list = bookService.getGenre();
+		List<Genre> list = service.getGenre();
 		logger.debug("genre list:"+list.toString());
 		model.addAttribute("genreList",list);
 		return "/jsp/addbook";
 	}
+	//도서등록
 	@RequestMapping(value="/bookAdd", method=RequestMethod.POST)
-	public String bookAdd(BookCommand bookCommand){
+	public String bookAdd(BookCommand bookCommand,HttpSession session){
 		logger.debug("bookAdd POST 메서드 호출");
 		logger.debug("bookCommand:"+bookCommand);
-		
-		
+		String libraryId = (String) session.getAttribute("LIBRARYID");
+		logger.debug("libraryId:"+libraryId);
+		service.addBook(bookCommand, libraryId);
 		return "redirect:/bookAdd";
 	}
 }

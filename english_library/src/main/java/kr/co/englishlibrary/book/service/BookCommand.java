@@ -4,7 +4,7 @@ public class BookCommand {
 	private String bookName;
 	private String bookAuthor;
 	private String bookPublisher;
-	private String genre;
+	private int genre;
 	
 	public String getBookName() {
 		return bookName;
@@ -24,10 +24,10 @@ public class BookCommand {
 	public void setBookPublisher(String bookPublisher) {
 		this.bookPublisher = bookPublisher;
 	}
-	public String getGenre() {
+	public int getGenre() {
 		return genre;
 	}
-	public void setGenre(String genre) {
+	public void setGenre(int genre) {
 		this.genre = genre;
 	}
 	@Override

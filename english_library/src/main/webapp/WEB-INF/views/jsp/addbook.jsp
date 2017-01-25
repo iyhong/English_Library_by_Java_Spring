@@ -72,7 +72,7 @@ a { /*사이드 글자 색상*/
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav">
-					<li><a href="#">Main</a></li>
+					<li><a href="<c:url value="/main"/>">Main</a></li>
 					<li class="active"><a href="#">도서관리</a></li>
 					<li><a href="#">대여관리</a></li>
 					<li><a href="#">회원관리</a></li>
@@ -90,7 +90,8 @@ a { /*사이드 글자 색상*/
 		<div class="row content">
 			<div class="col-sm-3 sidenav">
 				<ul class="nav nav-pills nav-stacked">
-					<li class="active"><a href="#">도서등록</a></li>
+				
+					<li class="active"><a href="<c:url value="/bookAdd"/>">도서등록</a></li>
 					<li><a href="#">도서폐기</a></li>
 
 				</ul>
@@ -119,7 +120,7 @@ a { /*사이드 글자 색상*/
 						<select name="genre">
 							<option value="">::선택::</option>
 							<c:forEach var="g" items="${genreList}">
-								<option value="${g.genreName}">${g.genreName}</option>
+								<option value="${g.genreNo}">${g.genreName}</option>
 							</c:forEach>
 						</select>
 					</div>

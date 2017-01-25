@@ -5,18 +5,14 @@
 <mapper namespace="book">
  	<insert id="insertBook" parameterType="kr.co.englishlibrary.book.service.Book">
  		INSERT INTO book(
- 			book_code,
  			library_id,
- 			state_no,
  			genre_no,
  			book_name,
  			book_author,
- 			book_publisher,
+ 			book_publisher
  		) values (
- 			#{bookCode},
  			#{libraryId},
- 			#{state.stateNo},
- 			#{genre.genreNo},
+ 			#{genreNo},
  			#{bookName},
  			#{bookAuthor},
  			#{bookPublisher}

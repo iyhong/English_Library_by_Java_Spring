@@ -20,17 +20,22 @@ public class BookService {
 	private Daos dao;
 	
 	private static final Logger logger = LoggerFactory.getLogger(BookService.class);
-
+	//도서등록폼에 보여줄 장르 가져오는메서드
 	public List<Genre> getGenre(){
 		logger.debug("getGenre() 메서드 호출");
 		return dao.selectAllGenre();
 	}
-	public int addBook(BookCommand bookCommand){
-		//Book book = new Book();
+	//도서등록하는 메서드
+	public int addBook(BookCommand bookCommand, String libraryId){
+		Book book = new Book();
+		//bookCommand -> book으로 옮김
+		book.setLibraryId(libraryId);
+		book.setGenreNo(bookCommand.getGenre());
+		book.setBookName(bookCommand.getBookName());
+		book.setBookAuthor(bookCommand.getBookAuthor());
+		book.setBookPublisher(bookCommand.getBookPublisher());
 		
-		//bookCommand -> book으로 옯겨야함
-		
-		//bookDao.insertBook(book);
+		bookDao.insertBook(book);
 		return 0;
 	}
 }
