@@ -10,13 +10,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import kr.co.englishlibrary.HomeController;
 import kr.co.englishlibrary.book.service.BookCommand;
 import kr.co.englishlibrary.services.Genre;
 
 @Controller
 public class BookController {
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(BookController.class);
 	@Autowired
 	private BookService bookService;
 	
@@ -24,13 +23,15 @@ public class BookController {
 	public String bookAdd(Model model){
 		logger.debug("bookAdd GET 메서드 호출");
 		List<Genre> list = bookService.getGenre();
-		logger.debug(list.toString());
+		logger.debug("genre list:"+list.toString());
 		model.addAttribute("genreList",list);
 		return "/jsp/addbook";
 	}
 	@RequestMapping(value="/bookAdd", method=RequestMethod.POST)
 	public String bookAdd(BookCommand bookCommand){
 		logger.debug("bookAdd POST 메서드 호출");
+		logger.debug("bookCommand:"+bookCommand);
+		
 		
 		return "redirect:/bookAdd";
 	}

@@ -1,9 +1,11 @@
-package kr.co.englishlibrary.services;
+package kr.co.englishlibrary.library.service;
 
 public class Library {
 	private String libraryId;
 	private String libraryPw;
-	private Local local;
+	private int local;
+	
+	
 	public String getLibraryId() {
 		return libraryId;
 	}
@@ -16,10 +18,10 @@ public class Library {
 	public void setLibraryPw(String libraryPw) {
 		this.libraryPw = libraryPw;
 	}
-	public Local getLocal() {
+	public int getLocal() {
 		return local;
 	}
-	public void setLocal(Local local) {
+	public void setLocal(int local) {
 		this.local = local;
 	}
 	@Override

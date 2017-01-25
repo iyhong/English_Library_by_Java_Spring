@@ -1,0 +1,25 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="book">
+ 	<insert id="insertBook" parameterType="kr.co.englishlibrary.book.service.Book">
+ 		INSERT INTO book(
+ 			book_code,
+ 			library_id,
+ 			state_no,
+ 			genre_no,
+ 			book_name,
+ 			book_author,
+ 			book_publisher,
+ 		) values (
+ 			#{bookCode},
+ 			#{libraryId},
+ 			#{state.stateNo},
+ 			#{genre.genreNo},
+ 			#{bookName},
+ 			#{bookAuthor},
+ 			#{bookPublisher}
+ 		)
+ 	</insert>
+</mapper>

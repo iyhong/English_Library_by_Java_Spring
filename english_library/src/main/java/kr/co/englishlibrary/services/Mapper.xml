@@ -1,12 +1,18 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- 
+
 <mapper namespace="mapper">
- 	<select id="selectAllGenre" resultType="kr.co.englishlibrary.services.Genre">
- 		SELECT 
- 			genre_no as genreNo,
- 			genre_name as genreName
- 		FROM genre
- 	</select>
+	<select id="selectAllGenre" resultType="kr.co.englishlibrary.services.Genre">
+		SELECT
+			genre_no as genreNo,
+			genre_name as genreName
+		FROM genre
+	</select>
+	<select id="selectAllLocal" resultType="kr.co.englishlibrary.services.Local">
+		SELECT
+			local_no as localNo,
+			local_name as localName
+		FROM local
+	</select>
 </mapper>

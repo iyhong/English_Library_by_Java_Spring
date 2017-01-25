@@ -1,0 +1,24 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="library">
+ 	<insert id="insertLibrary" parameterType="kr.co.englishlibrary.library.service.Library">
+ 		INSERT INTO library(
+ 			library_id,
+ 			library_pw,
+ 			local_no
+ 		)values(
+ 			#{libraryId},
+ 			#{libraryPw},
+ 			#{local}
+ 		)
+ 	</insert>
+ 	<select id="loginCheck" parameterType="kr.co.englishlibrary.library.service.Library"
+ 							resultType="kr.co.englishlibrary.library.service.Library">
+ 		SELECT 
+ 			library_id as libraryId
+		FROM library
+		WHERE library_id = #{libraryId} AND library_pw = #{libraryPw}
+ 	</select>
+</mapper>

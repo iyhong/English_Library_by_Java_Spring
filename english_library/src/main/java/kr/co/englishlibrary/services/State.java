@@ -3,6 +3,7 @@ package kr.co.englishlibrary.services;
 public class State {
 	private int stateNo;
 	private String StateName;
+	
 	public int getStateNo() {
 		return stateNo;
 	}

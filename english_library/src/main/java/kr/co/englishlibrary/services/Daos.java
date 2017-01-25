@@ -1,4 +1,4 @@
-package kr.co.englishlibrary.controllers;
+package kr.co.englishlibrary.services;
 
 import java.util.List;
 
@@ -8,17 +8,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import kr.co.englishlibrary.HomeController;
-import kr.co.englishlibrary.services.Genre;
-
 @Repository
 public class Daos {
 	@Autowired
 	private SqlSessionTemplate sql;
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(Daos.class);
 
 	public List<Genre> selectAllGenre(){
 		logger.debug("selectAllGenre() 메서드 호출");
 		return sql.selectList("mapper.selectAllGenre");
+	}
+	
+	public List<Local> selectAllLocal(){
+		logger.debug("selectAllLocal() 메서드 호출");
+		
+		return sql.selectList("mapper.selectAllLocal");
 	}
 }

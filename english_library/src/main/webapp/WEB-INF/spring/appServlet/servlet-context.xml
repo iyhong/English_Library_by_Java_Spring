@@ -40,6 +40,8 @@
 		<property name="mapperLocations">
 			<list>
 				<value>classpath:kr/co/englishlibrary/services/Mapper.xml</value>
+				<value>classpath:kr/co/englishlibrary/book/service/BookMapper.xml</value>
+				<value>classpath:kr/co/englishlibrary/library/service/LibraryMapper.xml</value>
 			</list>
 		</property>
 	</bean>
