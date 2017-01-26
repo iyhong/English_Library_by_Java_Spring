@@ -59,6 +59,39 @@ a { /*사이드 글자 색상*/
 	
 }
 </style>
+<script>
+$( document ).ready(function() {
+	/* $("#btn").bind("click",function(){
+		alert('asdf');
+	}); */
+	function getContextPath() {
+		var hostIndex = location.href.indexOf( location.host ) + location.host.length;
+		return location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
+	};
+
+	$("#btn").bind("click",function(){
+		if($('#bookCode').val()==""){
+			alert('값입력해요');
+		}
+	    $.ajax({
+	        url : getContextPath()+"/getRental",
+	        type: "POST",
+	        data : { "bookCode" : $("#bookCode").val() },
+	        success : function(responseData){
+	            var data = JSON.parse(responseData);
+	            if(!data){
+	                alert("실패");
+	                return false;
+	            }
+	            $("#bookName").val(data.bookName);
+	            
+	            
+	        }
+	    });
+	});
+});
+	
+</script>
 </head>
 <body>
 	<nav class="navbar navbar-inverse">
@@ -103,23 +136,23 @@ a { /*사이드 글자 색상*/
 				</h4>
 				<form action="<c:url value="/bookReturn"/>" method="post">
 					<div>
-						도서코드: <input type="text" name="bookCode" />
+						도서코드: <input id="bookCode" type="text" name="bookCode" />
 						<button id="btn" type="button" class="btn btn-info">조회</button>
 					</div>
 					<div>
-						도서명: <input type="text" name="bookName" />
+						도서명: <input id="bookName" type="text" name="bookName" />
 					</div>
 					<div>
-						회원이름: <input type="text" name="memberName" />
+						회원이름: <input id="memberName" type="text" name="memberName" />
 					</div>
 					<div>
-						총요금: <input type="text" name="totalPrice" />
+						총요금: <input id="totalPrice" type="text" name="totalPrice" />
 					</div>
 					<div>
-						받은금액: <input type="text" name="paid" />
+						받은금액: <input id="rentalPayment" type="text" name="rentalPayment" />
 					</div>
 					<div>
-						받을금액: <input type="text" name="pay" />
+						받을금액: <input id="willPay" type="text" name="willPay" />
 					</div>
 					<!-- <input type="submit" value="대여" />
 							<input type="reset"	value="초기화" /> -->

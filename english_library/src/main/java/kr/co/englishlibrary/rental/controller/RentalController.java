@@ -1,7 +1,10 @@
 package kr.co.englishlibrary.rental.controller;
 
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -11,8 +14,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.co.englishlibrary.rental.service.Rental;
+import kr.co.englishlibrary.rental.service.ReturnCommand;
 
 @Controller
 public class RentalController {
@@ -55,7 +62,24 @@ public class RentalController {
 	@RequestMapping(value="/bookReturn",method=RequestMethod.POST)
 	public String bookReturn(Rental rental){
 		logger.debug("bookRent GET 메서드 호출");
-		
+
 		return "redirect:/bookReturn";
 	}
+	//ajax를 이용해 도서코드로 대여정보 조회
+	@RequestMapping(value="/getRental", method=RequestMethod.POST)
+	public void ajaxBookCode(@RequestParam("bookCode") String bookCode,
+	        HttpServletResponse response){
+		logger.debug("ajaxBookCode POST 메서드 호출");
+		ObjectMapper mapper = new ObjectMapper();
+		ReturnCommand returnCommand = new ReturnCommand();
+		returnCommand.setBookName("1234afd");
+		//ajax요청에 응답
+		try {
+	        response.getWriter().print(mapper.writeValueAsString(returnCommand));
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }   
+		
+	}
+	
 }

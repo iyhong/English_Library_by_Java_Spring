@@ -1,5 +1,7 @@
 package kr.co.englishlibrary.book.controller;
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,10 +27,10 @@ public class BookDao {
 		logger.debug("값:"+sql.selectOne("book.selectOneBookByCode", bookCode));
 		return sql.selectOne("book.selectOneBookByCode", bookCode);
 	}
-	//도서정보수정(폐기로)
-	public int updateBookState(String bookCode){
+	//도서정보수정(state 도서가능,도서불가,폐기 세가지중 하나로 수정)
+	public int updateBookStateDisposal(Map map){
 		logger.debug("updateBookState() 메서드 호출");
-		return sql.update("book.updateBookState", bookCode);
+		return sql.update("book.updateBookState", map);
 	}
 	//도서상태 조회
 	public int selectBookState(String bookCode){
