@@ -80,7 +80,7 @@ a { /*사이드 글자 색상*/
 					<li><a href="<c:url value="/main"/>">Main</a></li>
 					<li><a href="<c:url value="/bookAdd"/>">도서관리</a></li>
 					<li class="active"><a href="<c:url value="/bookRent"/>">대여관리</a></li>
-					<li><a href="#">회원관리</a></li>
+					<li><a href="<c:url value="/memberAdd"/>">회원관리</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 				

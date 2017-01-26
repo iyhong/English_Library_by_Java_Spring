@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -34,6 +34,7 @@ nav {
 	color: white;
 	padding: 15px;
 }
+
 a { /*사이드 글자 색상*/
 	color: black;
 }
@@ -61,29 +62,23 @@ a { /*사이드 글자 색상*/
 </head>
 <body>
 	<nav class="navbar navbar-inverse">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target="#myNavbar">
-					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-			</div>
-			<div class="collapse navbar-collapse" id="myNavbar">
-				<ul class="nav navbar-nav">
-					<li><a href="/main">Main</a></li>
-					<li><a href="#">도서관리</a></li>
-					<li><a href="#">대여관리</a></li>
-					<li><a href="#">회원관리</a></li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-				
-					<li><a href="<c:url value="/logout"/>">
-							<span class="glyphicon glyphicon-log-in"></span>
-							Logout</a></li>
-				</ul>
-			</div>
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target="#myNavbar">
+				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
 		</div>
+		<div class="collapse navbar-collapse" id="myNavbar">
+			<ul class="nav navbar-nav navbar-right">
+
+				<li><a href="<c:url value="/"/>"> <span
+						class="glyphicon glyphicon-log-in"></span> home
+				</a></li>
+			</ul>
+		</div>
+	</div>
 	</nav>
 
 
@@ -91,7 +86,8 @@ a { /*사이드 글자 색상*/
 		<div class="row content">
 			<div class="col-sm-3 sidenav">
 				<ul class="nav nav-pills nav-stacked">
-					<li class="active"><a href="#">도서관 등록</a></li>
+					<li class="active"><a href="<c:url value="/libraryAdd"/>">도서관
+							등록</a></li>
 
 				</ul>
 				<br>
@@ -101,27 +97,26 @@ a { /*사이드 글자 색상*/
 				<h4>
 					<small>도서관 관리자 등록</small>
 				</h4>
-<!-- 도서관 등록 폼 시작 --> 
-					
+				<!-- 도서관 등록 폼 시작 -->
+
 				<form action="<c:url value="/libraryAdd"/>" method="post">
-				<div>
-					아이디 : <input type="text" name="libraryId">
-				</div>
-				<div>
-					비밀번호 : <input type="password" name="libraryPw">
-				</div>
-				<div>
-					지역 : 
-					<select name="local">
-						<option value="">::지역선택::</option>
-						<c:forEach var="l" items="${localList}">
-							<option value="${l.localNo}">${l.localName}</option>
-						</c:forEach>
-					</select>
-				</div>
+					<div>
+						아이디 : <input type="text" name="libraryId">
+					</div>
+					<div>
+						비밀번호 : <input type="password" name="libraryPw">
+					</div>
+					<div>
+						지역 : <select name="local">
+							<option value="">::지역선택::</option>
+							<c:forEach var="l" items="${localList}">
+								<option value="${l.localNo}">${l.localName}</option>
+							</c:forEach>
+						</select>
+					</div>
 					<p>
 						<input type="submit" class="btn btn-success btn-large" value="등록" />
-						<input type="reset"	class="btn btn-danger btn-large" value="리셋" />
+						<input type="reset" class="btn btn-danger btn-large" value="리셋" />
 					</p>
 
 				</form>

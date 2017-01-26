@@ -108,14 +108,14 @@ $( document ).ready(function() {
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav">
-					<li><a href="#">Main</a></li>
-					<li><a href="#">도서관리</a></li>
-					<li class="active"><a href="#">대여관리</a></li>
-					<li><a href="#">회원관리</a></li>
+					<li><a href="<c:url value="/main"/>">Main</a></li>
+					<li><a href="<c:url value="/bookAdd"/>">도서관리</a></li>
+					<li class="active"><a href="<c:url value="/bookRent"/>">대여관리</a></li>
+					<li><a href="<c:url value="/memberAdd"/>">회원관리</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
-							Login</a></li>
+					<li><a href="<c:url value="/logout"/>"><span class="glyphicon glyphicon-log-in"></span>
+							Logout</a></li>
 				</ul>
 			</div>
 		</div>
@@ -137,6 +137,8 @@ $( document ).ready(function() {
 				<h4>
 					<small>도서반납</small>
 				</h4>
+				
+<!-- 도서반납 폼 시작 -->
 				<form action="<c:url value="/bookReturn"/>" method="post">
 					<input type="hidden" id="rentalCode" name="rentalCode" value="">
 					<div>

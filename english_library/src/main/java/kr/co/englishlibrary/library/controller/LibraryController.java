@@ -35,7 +35,7 @@ public class LibraryController {
 		if(rowCount >0){
 			logger.debug("등록성공");
 		}
-		return "redirect:/libraryAdd";
+		return "redirect:/";
 	}
 	
 	@RequestMapping(value="/", method=RequestMethod.GET)
@@ -50,8 +50,9 @@ public class LibraryController {
 		logger.debug("library:"+library);
 		Library result = service.loginCheck(library);
 		if(result != null){
-			logger.debug("로그인 성공");
+			logger.debug("=========로그인 성공=========");
 			session.setAttribute("LIBRARYID", result.getLibraryId());
+			logger.debug("session:"+session);
 			return "redirect:/main";
 		}else{
 			logger.debug("로그인 실패");
@@ -61,7 +62,9 @@ public class LibraryController {
 	}
 	@RequestMapping(value="/logout")
 	public String libraryLogout(HttpSession session){
+		logger.debug("libraryLogout 호출");
 		session.invalidate();
+		logger.debug("========= 로그아웃!! 세션 종료 =========");
 		return "redirect:/";
 	}
 }
