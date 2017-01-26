@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <title>Bootstrap Example</title>
@@ -35,6 +34,7 @@ nav {
 	color: white;
 	padding: 15px;
 }
+
 a { /*사이드 글자 색상*/
 	color: black;
 }
@@ -73,8 +73,8 @@ a { /*사이드 글자 색상*/
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav">
 					<li><a href="<c:url value="/main"/>">Main</a></li>
-					<li class="active"><a href="<c:url value="/bookAdd"/>">도서관리</a></li>
-					<li><a href="<c:url value="/bookRent"/>">대여관리</a></li>
+					<li><a href="<c:url value="/bookAdd"/>">도서관리</a></li>
+					<li class="active"><a href="<c:url value="/bookRent"/>">대여관리</a></li>
 					<li><a href="#">회원관리</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
@@ -92,9 +92,8 @@ a { /*사이드 글자 색상*/
 		<div class="row content">
 			<div class="col-sm-3 sidenav">
 				<ul class="nav nav-pills nav-stacked">
-				
-					<li class="active"><a href="<c:url value="/bookAdd"/>">도서등록</a></li>
-					<li><a href="<c:url value="/bookDisposal"/>">도서폐기</a></li>
+					<li class="active"><a href="<c:url value="/bookRent"/>">대여</a></li>
+					<li><a href="<c:url value="/bookReturn"/>">반납</a></li>
 
 				</ul>
 				<br>
@@ -102,37 +101,34 @@ a { /*사이드 글자 색상*/
 
 			<div class="col-sm-9">
 				<h4>
-					<small>도서등록</small>
+					<small>도서대여</small>
 				</h4>
-				
-<!-- 도서등록 폼 시작 -->
-				
-				<form action="<c:url value="/bookAdd"/>" method="post">
+				<form action="<c:url value="/bookRent"/>" method="post">
 					<div>
-						도서명 : <input type="text" name="bookName">
+						도서코드: <input type="text" name="bookCode" />
 					</div>
 					<div>
-						저자 : <input type="text" name="bookAuthor">
+						회원코드: <input type="text" name="memberId" />
 					</div>
 					<div>
-						출판사 : <input type="text" name="bookPublisher">
+						대여일: <input type="date" name="rentalStart" />
 					</div>
 					<div>
-						장르 : 
-						<select name="genre">
-							<option value="">::선택::</option>
-							<c:forEach var="g" items="${genreList}">
-								<option value="${g.genreNo}">${g.genreName}</option>
-							</c:forEach>
-						</select>
+						종료일: <input type="date" name="rentalEnd" />
 					</div>
-					<p>
-						<input type="submit" class="btn btn-success btn-large" value="등록" />
-						<input type="reset" class="btn btn-danger btn-large" value="리셋" />
-					</p>
+					<div>
+						결제금액: <input type="text" name="rentalPayment" />
+					</div>
+					<!-- <input type="submit" value="대여" />
+							<input type="reset"	value="초기화" /> -->
+					<input type="submit" class="btn btn-success btn-large" value="대여" />
+					<input type="reset" class="btn btn-danger btn-large" value="초기화" />
 				</form>
 			</div>
 		</div>
 	</div>
+
+
+
 </body>
 </html>

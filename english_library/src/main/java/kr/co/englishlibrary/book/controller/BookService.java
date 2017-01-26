@@ -39,8 +39,8 @@ public class BookService {
 		book.setBookAuthor(bookCommand.getBookAuthor());
 		book.setBookPublisher(bookCommand.getBookPublisher());
 		
-		bookDao.insertBook(book);
-		return 0;
+		int rowCount = bookDao.insertBook(book);
+		return rowCount;
 	}
 	//폐기등록하는 메서드
 	public int addDisposal(String bookCode){

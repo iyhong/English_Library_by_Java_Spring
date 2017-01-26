@@ -30,4 +30,9 @@ public class BookDao {
 		logger.debug("updateBookState() 메서드 호출");
 		return sql.update("book.updateBookState", bookCode);
 	}
+	//도서상태 조회
+	public int selectBookState(String bookCode){
+		logger.debug("selectBookState() 메서드 호출");
+		return sql.selectOne("book.selectBookState", bookCode);
+	}
 }

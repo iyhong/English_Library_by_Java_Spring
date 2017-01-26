@@ -22,12 +22,12 @@
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/views directory -->
 	
+	
+	<!-- 트랜잭션 처리를 위해 connection가진 tx기능을 spring에게 위임 -->
  	<bean id="transactionManager"
              class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource" />
     </bean>
-	
-	
  	<tx:annotation-driven />
  	<!-- 인터페이스 없으면 자동으로 만들어줌 -->
  	<tx:annotation-driven proxy-target-class="true"/>
@@ -58,6 +58,7 @@
 				<value>classpath:kr/co/englishlibrary/services/Mapper.xml</value>
 				<value>classpath:kr/co/englishlibrary/book/service/BookMapper.xml</value>
 				<value>classpath:kr/co/englishlibrary/library/service/LibraryMapper.xml</value>
+				<value>classpath:kr/co/englishlibrary/rental/service/RentalMapper.xml</value>
 			</list>
 		</property>
 	</bean>

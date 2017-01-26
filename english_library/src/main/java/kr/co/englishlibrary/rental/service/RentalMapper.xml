@@ -1,0 +1,28 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="rental">
+	<insert id="inesrtRental" parameterType="kr.co.englishlibrary.rental.service.Rental">
+		INSERT INTO rental(
+			rental_code,
+			book_code,
+			rental_start,
+			rental_end,
+			member_id,
+			rental_payment
+		) VALUES (
+			#{rentalCode},
+			#{bookCode},
+			#{rentalStart},
+			#{rentalEnd},
+			#{memberId},
+			#{rentalPayment}
+		)
+	</insert>
+	<select id="selectMaxAutoNum" resultType="int">
+		SELECT
+			max(auto_num)
+		FROM rental
+	</select>
+</mapper>

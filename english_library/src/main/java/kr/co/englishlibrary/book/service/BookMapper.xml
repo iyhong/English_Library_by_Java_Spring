@@ -33,4 +33,10 @@
  			state_no = 3
 		WHERE book_code = #{bookCode}
  	</update>
+ 	<select id="selectBookState" parameterType="String" resultType="int">
+ 		SELECT
+ 			state_no
+		FROM book
+		WHERE book_code=#{bookCode}
+ 	</select>
 </mapper>

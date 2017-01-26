@@ -32,19 +32,26 @@ public class BookController {
 	}
 	//도서등록
 	@RequestMapping(value="/bookAdd", method=RequestMethod.POST)
-	public String bookAdd(BookCommand bookCommand,HttpSession session){
+	public String bookAdd(BookCommand bookCommand,HttpSession session, Model model){
 		logger.debug("bookAdd POST 메서드 호출");
 		logger.debug("bookCommand:"+bookCommand);
 		String libraryId = (String) session.getAttribute("LIBRARYID");
 		logger.debug("libraryId:"+libraryId);
-		service.addBook(bookCommand, libraryId);
-		return "redirect:/bookAdd";
+		int result = service.addBook(bookCommand, libraryId);
+		if(result > 0){
+			return "redirect:/bookAdd";
+		}else{
+			model.addAttribute("message","도서등록에 실패하였습니다.");
+			return "/jsp/fail";
+		}
 	}
+	//폐기등록폼
 	@RequestMapping(value="/bookDisposal", method=RequestMethod.GET)
 	public String bookDisposal(){
 		logger.debug("bookDisposal GET 메서드 호출");
 		return "/jsp/disposalbook";
 	}
+	//폐기등록
 	@RequestMapping(value="/bookDisposal", method=RequestMethod.POST)
 	public String bookDisposal(String bookCode,Model model){
 		logger.debug("bookDisposal POST 메서드 호출");
@@ -52,7 +59,7 @@ public class BookController {
 		int result = service.addDisposal(bookCode);
 		//없는도서코드를 입력해서 select한 결과가 null일경우 result 는 -1값을 가진다
 		if(result == -1){
-			model.addAttribute("message","없는 도서코드입니다.");
+			model.addAttribute("message","없는 도서코드를 입력하셨습니다.");
 			return "/jsp/fail";
 		}
 		return "redirect:/bookDisposal";
