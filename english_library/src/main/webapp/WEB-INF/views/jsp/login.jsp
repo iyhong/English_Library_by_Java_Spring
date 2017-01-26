@@ -45,6 +45,17 @@
     	color: black;
     }
   </style>
+  <script>
+$( document ).ready(function() {
+	function getContextPath() {
+		var hostIndex = location.href.indexOf( location.host ) + location.host.length;
+		return location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
+	};
+	$('#btn').click(function(){
+		$(location).attr('href', getContextPath()+'/libraryAdd');
+	});
+});
+  </script>
 </head>
 <body>
 <nav class="navbar navbar-inverse">
@@ -67,7 +78,7 @@
 				</div>
 				<div align="center">
 					<input class="btn btn-success" type="submit" value="로그인">
-					<input class="btn btn-warning" type="button" value="관리자 회원가입">
+					<input id="btn"class="btn btn-warning" type="button" value="관리자 회원가입">
 				</div>
 			</form>
 		</div>

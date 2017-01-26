@@ -24,7 +24,8 @@
  			book_name as bookName,
  			book_author as bookAuthor,
  			genre_no as genreNo,
- 			book_publisher as bookPublisher
+ 			book_publisher as bookPublisher,
+ 			state_no as stateNo
  		FROM book
  		WHERE book_code = #{bookCode}
  	</select>

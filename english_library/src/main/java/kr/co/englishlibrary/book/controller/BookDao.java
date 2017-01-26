@@ -28,7 +28,7 @@ public class BookDao {
 		return sql.selectOne("book.selectOneBookByCode", bookCode);
 	}
 	//도서정보수정(state 도서가능,도서불가,폐기 세가지중 하나로 수정)
-	public int updateBookStateDisposal(Map map){
+	public int updateBookState(Map map){
 		logger.debug("updateBookState() 메서드 호출");
 		return sql.update("book.updateBookState", map);
 	}

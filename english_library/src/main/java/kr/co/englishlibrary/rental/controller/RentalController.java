@@ -2,6 +2,7 @@ package kr.co.englishlibrary.rental.controller;
 
 
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.co.englishlibrary.rental.service.Rental;
@@ -60,19 +62,41 @@ public class RentalController {
 	}
 	//반납
 	@RequestMapping(value="/bookReturn",method=RequestMethod.POST)
-	public String bookReturn(Rental rental){
-		logger.debug("bookRent GET 메서드 호출");
-
-		return "redirect:/bookReturn";
+	public String bookReturn(ReturnCommand returnCommand, Model model){
+		logger.debug("bookRent POST 메서드 호출");
+		logger.debug("returnCommand:"+returnCommand);
+		int result = service.returnBook(returnCommand);
+		if(result>1){
+			logger.debug("반납 성공");
+			return "redirect:/bookReturn";
+		}else{
+			logger.debug("반납 실패");
+			model.addAttribute("message", "도서반납에 실패하였습니다.");
+			return "jsp/fail";
+		}
 	}
 	//ajax를 이용해 도서코드로 대여정보 조회
-	@RequestMapping(value="/getRental", method=RequestMethod.POST)
+	@RequestMapping(value="/getRental", method=RequestMethod.POST,
+			produces="text/plain; charset=UTF-8")
 	public void ajaxBookCode(@RequestParam("bookCode") String bookCode,
 	        HttpServletResponse response){
 		logger.debug("ajaxBookCode POST 메서드 호출");
 		ObjectMapper mapper = new ObjectMapper();
 		ReturnCommand returnCommand = new ReturnCommand();
-		returnCommand.setBookName("1234afd");
+		
+		returnCommand = service.getOneRental(bookCode);
+		if(returnCommand == null){
+			
+			try {
+				response.getWriter().print(mapper.writeValueAsString(""));
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		//ajax요청에 응답
 		try {
 	        response.getWriter().print(mapper.writeValueAsString(returnCommand));

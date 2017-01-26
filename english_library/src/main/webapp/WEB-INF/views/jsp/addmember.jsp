@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -71,16 +71,14 @@ a { /*사이드 글자 색상*/
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav">
-					<li><a href="/main">Main</a></li>
+					<li><a href="#">Main</a></li>
 					<li><a href="#">도서관리</a></li>
 					<li><a href="#">대여관리</a></li>
-					<li><a href="#">회원관리</a></li>
+					<li class="active"><a href="#">회원관리</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-				
-					<li><a href="<c:url value="/logout"/>">
-							<span class="glyphicon glyphicon-log-in"></span>
-							Logout</a></li>
+					<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
+							Login</a></li>
 				</ul>
 			</div>
 		</div>
@@ -91,7 +89,7 @@ a { /*사이드 글자 색상*/
 		<div class="row content">
 			<div class="col-sm-3 sidenav">
 				<ul class="nav nav-pills nav-stacked">
-					<li class="active"><a href="#">도서관 등록</a></li>
+					<li class="active"><a href="#">회원등록</a></li>
 
 				</ul>
 				<br>
@@ -99,23 +97,22 @@ a { /*사이드 글자 색상*/
 
 			<div class="col-sm-9">
 				<h4>
-					<small>도서관 관리자 등록</small>
+					<small>회원등록</small>
 				</h4>
-<!-- 도서관 등록 폼 시작 --> 
-					
-				<form action="<c:url value="/libraryAdd"/>" method="post">
+<!-- 회원등록 폼 시작 -->
+
+				<form action="<c:url value="/memberAdd"/>" method="post">
 				<div>
-					아이디 : <input type="text" name="libraryId">
+					이름 : <input type="text" name="memberName">
 				</div>
 				<div>
-					비밀번호 : <input type="password" name="libraryPw">
+					연락처 : <input type="text" name="memberPhone">
 				</div>
 				<div>
-					지역 : 
-					<select name="local">
-						<option value="">::지역선택::</option>
-						<c:forEach var="l" items="${localList}">
-							<option value="${l.localNo}">${l.localName}</option>
+					<select name=memberLevelNo>
+						<option>::등급선택::</option>
+						<c:forEach var="l" items="${memberLevel}">
+							<option value="${l.memberLevelNo}">${l.memberLevelName}</option>
 						</c:forEach>
 					</select>
 				</div>

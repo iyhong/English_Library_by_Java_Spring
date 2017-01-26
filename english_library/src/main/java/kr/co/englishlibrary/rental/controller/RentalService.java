@@ -1,5 +1,8 @@
 package kr.co.englishlibrary.rental.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.englishlibrary.book.controller.BookDao;
 import kr.co.englishlibrary.rental.service.Rental;
+import kr.co.englishlibrary.rental.service.ReturnCommand;
 
 @Service
 @Transactional
@@ -52,7 +56,57 @@ public class RentalService {
 		Map<String, Object> map = new HashMap<String,Object>();
 		map.put("bookCode", rental.getBookCode());
 		map.put("bookState", 2);
-		rowCount += bookDao.updateBookStateDisposal(map);
+		rowCount += bookDao.updateBookState(map);
+		return rowCount;
+	}
+	//대여정보 조회
+	public ReturnCommand getOneRental(String bookCode){
+		logger.debug("getOneRental 메서드 호출");
+		//도서코드로 대여정보를 들고온다
+		//대여정보중 검색할때 도서코드일치 && 대여상태가 '대여'인 것의 정보만 가져온다
+		ReturnCommand returnCommand = rentalDao.selectOneRental(bookCode);
+		if(returnCommand == null){
+			return null;
+		}
+		logger.debug("returnCommand:"+returnCommand);
+		int rentalPayment = returnCommand.getRentalPayment();
+		String rentalStart = returnCommand.getRentalStart();
+		
+		//오늘날짜와 시작날짜의 차이를 구한다.
+		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date today=  new Date();
+		Date startday = null;
+		try {
+			startday =  transFormat.parse(rentalStart);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		logger.debug("startday:"+startday);
+		logger.debug("today:"+today);
+		long diff = today.getTime() - startday.getTime();
+		long diffDays = (diff / (24 * 60 * 60 * 1000));
+		int diffDaysInt = (int) diffDays;
+		logger.debug("diffDays:"+diffDays);
+		//총요금 만들어서 넣어줌
+		returnCommand.setTotalPrice(returnCommand.getMemberLevelPrice()*diffDaysInt);
+		//받아야할 금액 계산(총요금-낸요금)
+		returnCommand.setWillPay(returnCommand.getTotalPrice()-returnCommand.getRentalPayment());
+		
+		return returnCommand;
+	}
+	
+	//반납
+	public int returnBook(ReturnCommand returnCommand){
+		logger.debug("returnBook 메서드 호출");
+		int rowCount = 0;
+		//대여상태를 반납으로 수정해준다.
+		rowCount += rentalDao.updateRentalState(returnCommand);
+		//도서코드와 도서상태를 맵에 담아 도서상태를 대여가능으로 수정준다.
+		Map<String, Object> map = new HashMap<String,Object>();
+		map.put("bookCode", returnCommand.getBookCode());
+		map.put("bookState", 1);
+		rowCount += bookDao.updateBookState(map);
 		return rowCount;
 	}
 	

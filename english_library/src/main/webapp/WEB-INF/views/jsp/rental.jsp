@@ -59,6 +59,11 @@ a { /*사이드 글자 색상*/
 	
 }
 </style>
+<script>
+	$(document).ready( function() {
+	    $('#rentalStart').val(new Date().toDateInputValue());
+	});
+</script>
 </head>
 <body>
 	<nav class="navbar navbar-inverse">
@@ -111,7 +116,7 @@ a { /*사이드 글자 색상*/
 						회원코드: <input type="text" name="memberId" />
 					</div>
 					<div>
-						대여일: <input type="date" name="rentalStart" />
+						대여일: <input id="rentalStart" type="date" name="rentalStart" />
 					</div>
 					<div>
 						종료일: <input type="date" name="rentalEnd" />

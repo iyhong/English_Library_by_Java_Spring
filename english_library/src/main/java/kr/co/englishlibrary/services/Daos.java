@@ -28,4 +28,12 @@ public class Daos {
 		logger.debug("insertDisposal() 메서드 호출");
 		return sql.insert("mapper.disposalBook", disposal);
 	}
+	//회원등급 가져오기
+	public List<MemberLevel> selectAllLevel(){
+		return sql.selectList("mapper.selectAllLevel");
+	}
+	//회원등록하기
+	public int insertMember(Member member){
+		return sql.insert("mapper.insertMember", member);
+	}
 }

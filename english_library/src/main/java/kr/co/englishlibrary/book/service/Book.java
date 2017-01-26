@@ -1,11 +1,9 @@
 package kr.co.englishlibrary.book.service;
 
-import kr.co.englishlibrary.services.State;
-
 public class Book {
 	private String bookCode;
 	private String libraryId;
-	private State state;
+	private int stateNo;
 	private int genreNo;
 	private String bookName;
 	private String bookAuthor;
@@ -26,11 +24,11 @@ public class Book {
 	public void setLibraryId(String libraryId) {
 		this.libraryId = libraryId;
 	}
-	public State getState() {
-		return state;
+	public int getStateNo() {
+		return stateNo;
 	}
-	public void setState(State state) {
-		this.state = state;
+	public void setStateNo(int stateNo) {
+		this.stateNo = stateNo;
 	}
 	public int getGenreNo() {
 		return genreNo;
@@ -76,12 +74,9 @@ public class Book {
 	}
 	@Override
 	public String toString() {
-		return "Book [bookCode=" + bookCode + ", libraryId=" + libraryId + ", state=" + state + ", genreNo=" + genreNo
-				+ ", bookName=" + bookName + ", bookAuthor=" + bookAuthor + ", bookPublisher=" + bookPublisher
+		return "Book [bookCode=" + bookCode + ", libraryId=" + libraryId + ", stateNo=" + stateNo + ", genreNo="
+				+ genreNo + ", bookName=" + bookName + ", bookAuthor=" + bookAuthor + ", bookPublisher=" + bookPublisher
 				+ ", bookFirstDay=" + bookFirstDay + ", bookTotalDay=" + bookTotalDay + ", bookTotalCount="
 				+ bookTotalCount + "]";
 	}
-	
-	
-	
 }

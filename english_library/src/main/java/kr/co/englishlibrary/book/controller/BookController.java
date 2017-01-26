@@ -58,8 +58,11 @@ public class BookController {
 		logger.debug("bookCode:"+bookCode);
 		int result = service.addDisposal(bookCode);
 		//없는도서코드를 입력해서 select한 결과가 null일경우 result 는 -1값을 가진다
-		if(result == -1){
+		if(result == 0){
 			model.addAttribute("message","없는 도서코드를 입력하셨습니다.");
+			return "/jsp/fail";
+		}else if(result == -1){
+			model.addAttribute("message","이미 폐기된 도서입니다.");
 			return "/jsp/fail";
 		}
 		return "redirect:/bookDisposal";

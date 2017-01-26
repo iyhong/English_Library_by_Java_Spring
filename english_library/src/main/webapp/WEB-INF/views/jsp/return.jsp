@@ -84,8 +84,11 @@ $( document ).ready(function() {
 	                return false;
 	            }
 	            $("#bookName").val(data.bookName);
-	            
-	            
+	            $("#memberName").val(data.memberName);
+	            $("#totalPrice").val(data.totalPrice);
+	            $("#rentalPayment").val(data.rentalPayment);
+	            $("#willPay").val(data.willPay);
+	            $("#rentalCode").val(data.rentalCode);
 	        }
 	    });
 	});
@@ -135,6 +138,7 @@ $( document ).ready(function() {
 					<small>도서반납</small>
 				</h4>
 				<form action="<c:url value="/bookReturn"/>" method="post">
+					<input type="hidden" id="rentalCode" name="rentalCode" value="">
 					<div>
 						도서코드: <input id="bookCode" type="text" name="bookCode" />
 						<button id="btn" type="button" class="btn btn-info">조회</button>
@@ -156,7 +160,7 @@ $( document ).ready(function() {
 					</div>
 					<!-- <input type="submit" value="대여" />
 							<input type="reset"	value="초기화" /> -->
-					<input type="submit" class="btn btn-success btn-large" value="대여" />
+					<input type="submit" class="btn btn-success btn-large" value="반납" />
 					<input type="reset" class="btn btn-danger btn-large" value="초기화" />
 				</form>
 			</div>

@@ -25,4 +25,27 @@
 			max(auto_num)
 		FROM rental
 	</select>
+	<select id="selectOneRental" parameterType="String" resultType="kr.co.englishlibrary.rental.service.ReturnCommand">
+		SELECT
+			rental_code as rentalCode,
+			rental.book_code as bookCode, 
+			book.book_name as bookName, 
+			member.member_name as memberName,
+			rental_payment as rentalPayment,
+			rental_start as rentalStart,
+			memberlevel.price as memberLevelPrice
+		FROM rental
+		JOIN book ON rental.book_code=book.book_code
+		JOIN member ON rental.member_id=member.member_id
+		JOIN memberlevel ON member.member_id=memberlevel.memberlevel_no
+		WHERE rental.book_code=#{bookCode} &amp;&amp; rentalstate_no !=2
+	</select>
+	<update id="updateRentalState" parameterType="kr.co.englishlibrary.rental.service.ReturnCommand">
+		UPDATE rental 
+		SET 
+			rentalstate_no=2,
+			rental_payment=#{totalPrice},
+			rental_end=sysdate()
+		WHERE rental_code=#{rentalCode}
+	</update>
 </mapper>

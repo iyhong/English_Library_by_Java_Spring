@@ -52,15 +52,18 @@ public class BookService {
 		Book book = bookDao.selectOneBookByCode(bookCode);
 		logger.debug("book:"+book);
 		if(book==null){
+			rowCount = 0;
+			return rowCount;
+		}else if(book.getStateNo()==3){
 			rowCount = -1;
 			return rowCount;
 		}
 		//bookCode와 bookState를 map에 넣어준다.
 		Map<String, Object> map = new HashMap<String,Object>();
 		map.put("bookCode", bookCode);
-		//맵에 넣어줄대 도서상태 3(폐기)로 넣어줌
+		//맵에 넣어줄때 도서상태 3(폐기)로 넣어줌
 		map.put("bookState", 3);
-		rowCount += bookDao.updateBookStateDisposal(map);
+		rowCount += bookDao.updateBookState(map);
 		//disposal에 도서정보 저장
 		Disposal disposal = new Disposal();
 		disposal.setBookCode(book.getBookCode());

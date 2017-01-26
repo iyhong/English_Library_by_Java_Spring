@@ -8,7 +8,22 @@ public class ReturnCommand {
 	private int totalPrice;
 	private int rentalPayment;
 	private int willPay;
+	private String rentalStart;
+	private int memberLevelPrice;
 	
+	
+	public String getRentalStart() {
+		return rentalStart;
+	}
+	public void setRentalStart(String rentalStart) {
+		this.rentalStart = rentalStart;
+	}
+	public int getMemberLevelPrice() {
+		return memberLevelPrice;
+	}
+	public void setMemberLevelPrice(int memberLevelPrice) {
+		this.memberLevelPrice = memberLevelPrice;
+	}
 	public String getBookName() {
 		return bookName;
 	}
@@ -55,9 +70,8 @@ public class ReturnCommand {
 	public String toString() {
 		return "ReturnCommand [rentalCode=" + rentalCode + ", bookCode=" + bookCode + ", bookName=" + bookName
 				+ ", memberName=" + memberName + ", totalPrice=" + totalPrice + ", rentalPayment=" + rentalPayment
-				+ ", willPay=" + willPay + "]";
+				+ ", willPay=" + willPay + ", rentalStart=" + rentalStart + ", memberLevelPrice=" + memberLevelPrice
+				+ "]";
 	}
-
-	
 	
 }
