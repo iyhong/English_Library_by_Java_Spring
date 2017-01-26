@@ -50,4 +50,10 @@
 			#{memberLevelNo}
 		)
 	</insert>
+	<select id="selectOneMember" parameterType="int" resultType="kr.co.englishlibrary.services.Member">
+		SELECT
+			member_id as memberId
+		FROM member
+		WHERE member_id = #{memberId}
+	</select>
 </mapper>

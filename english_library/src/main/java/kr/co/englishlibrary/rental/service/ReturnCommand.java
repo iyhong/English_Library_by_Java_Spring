@@ -10,8 +10,15 @@ public class ReturnCommand {
 	private int willPay;
 	private String rentalStart;
 	private int memberLevelPrice;
+	private int bookTotalDay;
 	
 	
+	public int getBookTotalDay() {
+		return bookTotalDay;
+	}
+	public void setBookTotalDay(int bookTotalDay) {
+		this.bookTotalDay = bookTotalDay;
+	}
 	public String getRentalStart() {
 		return rentalStart;
 	}
@@ -71,7 +78,7 @@ public class ReturnCommand {
 		return "ReturnCommand [rentalCode=" + rentalCode + ", bookCode=" + bookCode + ", bookName=" + bookName
 				+ ", memberName=" + memberName + ", totalPrice=" + totalPrice + ", rentalPayment=" + rentalPayment
 				+ ", willPay=" + willPay + ", rentalStart=" + rentalStart + ", memberLevelPrice=" + memberLevelPrice
-				+ "]";
+				+ ", bookTotalDay=" + bookTotalDay + "]";
 	}
 	
 }

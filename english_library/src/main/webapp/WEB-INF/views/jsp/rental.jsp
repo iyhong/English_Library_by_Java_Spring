@@ -122,7 +122,7 @@ a { /*사이드 글자 색상*/
 						종료일: <input type="date" name="rentalEnd" />
 					</div>
 					<div>
-						결제금액: <input type="text" name="rentalPayment" />
+						결제금액: <input type="text" name="rentalPayment" value="0" />
 					</div>
 					<!-- <input type="submit" value="대여" />
 							<input type="reset"	value="초기화" /> -->

@@ -30,10 +30,17 @@ public class Daos {
 	}
 	//회원등급 가져오기
 	public List<MemberLevel> selectAllLevel(){
+		logger.debug("selectAllLevel() 메서드 호출");
 		return sql.selectList("mapper.selectAllLevel");
 	}
 	//회원등록하기
 	public int insertMember(Member member){
+		logger.debug("insertMember() 메서드 호출");
 		return sql.insert("mapper.insertMember", member);
+	}
+	//회원조회하기
+	public Member selectOneMember(int memberId){
+		logger.debug("selectOneMember() 메서드 호출");
+		return sql.selectOne("mapper.selectOneMember", memberId);
 	}
 }

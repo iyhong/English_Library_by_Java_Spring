@@ -37,4 +37,16 @@ public class BookDao {
 		logger.debug("selectBookState() 메서드 호출");
 		return sql.selectOne("book.selectBookState", bookCode);
 	}
+	//도서 firstday 변경
+	public int updateBookFirstDay(String bookCode){
+		return sql.update("book.updateBookFirstDay", bookCode);
+	}
+	//도서의 totalCount +1 해줌
+	public int updateBookTotalCount(Map map){
+		return sql.update("book.updateBookTotalCount", map);
+	}
+	//도서의 totalDay + 해줌
+	public int updateBookTotalDay(Map map){
+		return sql.update("book.updateBookTotalDay", map);
+	}
 }

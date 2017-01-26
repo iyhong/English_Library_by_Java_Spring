@@ -89,6 +89,7 @@ $( document ).ready(function() {
 	            $("#rentalPayment").val(data.rentalPayment);
 	            $("#willPay").val(data.willPay);
 	            $("#rentalCode").val(data.rentalCode);
+	            $("#bookTotalDay").val(data.bookTotalDay);
 	        }
 	    });
 	});
@@ -141,6 +142,7 @@ $( document ).ready(function() {
 <!-- 도서반납 폼 시작 -->
 				<form action="<c:url value="/bookReturn"/>" method="post">
 					<input type="hidden" id="rentalCode" name="rentalCode" value="">
+					<input type="hidden" id="bookTotalDay" name="bookTotalDay" value="">
 					<div>
 						도서코드: <input id="bookCode" type="text" name="bookCode" />
 						<button id="btn" type="button" class="btn btn-info">조회</button>

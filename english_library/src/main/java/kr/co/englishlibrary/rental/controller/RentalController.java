@@ -45,6 +45,9 @@ public class RentalController {
 		if(result == -1){
 			model.addAttribute("message","해당도서는 대출불가합니다.");
 			return "/jsp/fail";
+		}else if(result == -2){
+			model.addAttribute("message","회원이 아닙니다 가입하세요.");
+			return "/jsp/fail";
 		}else if (result >0){
 			logger.debug("대여 성공");
 			return "redirect:/bookRent";

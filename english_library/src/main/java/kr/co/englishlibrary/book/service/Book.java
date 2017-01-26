@@ -9,8 +9,8 @@ public class Book {
 	private String bookAuthor;
 	private String bookPublisher;
 	private String bookFirstDay;
-	private String bookTotalDay;
-	private String bookTotalCount;
+	private int bookTotalDay;
+	private int bookTotalCount;
 	
 	public String getBookCode() {
 		return bookCode;
@@ -60,16 +60,16 @@ public class Book {
 	public void setBookFirstDay(String bookFirstDay) {
 		this.bookFirstDay = bookFirstDay;
 	}
-	public String getBookTotalDay() {
+	public int getBookTotalDay() {
 		return bookTotalDay;
 	}
-	public void setBookTotalDay(String bookTotalDay) {
+	public void setBookTotalDay(int bookTotalDay) {
 		this.bookTotalDay = bookTotalDay;
 	}
-	public String getBookTotalCount() {
+	public int getBookTotalCount() {
 		return bookTotalCount;
 	}
-	public void setBookTotalCount(String bookTotalCount) {
+	public void setBookTotalCount(int bookTotalCount) {
 		this.bookTotalCount = bookTotalCount;
 	}
 	@Override

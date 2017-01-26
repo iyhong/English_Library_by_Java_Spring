@@ -25,7 +25,9 @@
  			book_author as bookAuthor,
  			genre_no as genreNo,
  			book_publisher as bookPublisher,
- 			state_no as stateNo
+ 			state_no as stateNo,
+ 			book_totalcount as bookTotalCount,
+ 			book_firstday as bookFirstDay
  		FROM book
  		WHERE book_code = #{bookCode}
  	</select>
@@ -40,4 +42,19 @@
 		FROM book
 		WHERE book_code=#{bookCode}
  	</select>
+	<update id="updateBookFirstDay" parameterType="String">
+		UPDATE book SET 
+			book_firstday = sysdate()
+		WHERE book_code = #{bookCode}
+	</update>
+	<update id="updateBookTotalCount" parameterType="Map">
+		UPDATE book SET 
+			book_totalcount = #{bookTotalCount}
+		WHERE book_code = #{bookCode}
+	</update>
+	<update id="updateBookTotalDay" parameterType="Map">
+		UPDATE book SET 
+			book_totalday = #{bookTotalDay}
+		WHERE book_code = #{bookCode}
+	</update>
 </mapper>
