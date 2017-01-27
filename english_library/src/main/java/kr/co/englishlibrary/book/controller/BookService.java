@@ -53,8 +53,10 @@ public class BookService {
 		logger.debug("book:"+book);
 		if(book==null){
 			return 0;
+		}else if(book.getStateNo()==2){
+			return -2;
 		}else if(book.getStateNo()==3){
-			return -1;
+			return -3;
 		}
 		//bookCode와 bookState를 map에 넣어준다.
 		Map<String, Object> map = new HashMap<String,Object>();

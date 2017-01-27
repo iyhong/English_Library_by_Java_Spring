@@ -61,7 +61,10 @@ public class BookController {
 		if(result == 0){
 			model.addAttribute("message","없는 도서코드를 입력하셨습니다.");
 			return "/jsp/fail";
-		}else if(result == -1){
+		}else if(result == -2){
+			model.addAttribute("message","대여중인 도서입니다.");
+			return "/jsp/fail";
+		}else if(result == -3){
 			model.addAttribute("message","이미 폐기된 도서입니다.");
 			return "/jsp/fail";
 		}
