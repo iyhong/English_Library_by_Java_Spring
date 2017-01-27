@@ -24,9 +24,9 @@ public class Daos {
 		return sql.selectList("mapper.selectAllLocal");
 	}
 	//폐기등록하기
-	public int insertDisposal(Disposal disposal){
+	public int insertDisposal(String bookCode){
 		logger.debug("insertDisposal() 메서드 호출");
-		return sql.insert("mapper.disposalBook", disposal);
+		return sql.insert("mapper.disposalBook", bookCode);
 	}
 	//회원등급 가져오기
 	public List<MemberLevel> selectAllLevel(){

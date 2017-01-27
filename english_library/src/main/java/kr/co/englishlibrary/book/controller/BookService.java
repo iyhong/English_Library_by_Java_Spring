@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.co.englishlibrary.book.service.Book;
 import kr.co.englishlibrary.book.service.BookCommand;
 import kr.co.englishlibrary.etc.services.Daos;
-import kr.co.englishlibrary.etc.services.Disposal;
 import kr.co.englishlibrary.etc.services.Genre;
 
 @Service
@@ -64,14 +63,8 @@ public class BookService {
 		//맵에 넣어줄때 도서상태 3(폐기)로 넣어줌
 		map.put("bookState", 3);
 		rowCount += bookDao.updateBookState(map);
-		//disposal에 도서정보 저장
-		Disposal disposal = new Disposal();
-		disposal.setBookCode(book.getBookCode());
-		disposal.setDisposalBookName(book.getBookName());
-		disposal.setDisposalAuthor(book.getBookAuthor());
-		disposal.setGenreNo(book.getGenreNo());
-		disposal.setDisposalPublisher(book.getBookPublisher());
-		rowCount += dao.insertDisposal(disposal);
+		//bookCode를 조회해 도서정보를 폐기테이블에 복사한다.
+		rowCount += dao.insertDisposal(bookCode);
 		return rowCount;
 	}
 }

@@ -15,22 +15,24 @@
 			local_name as localName
 		FROM local
 	</select>
-	<insert id="disposalBook" parameterType="kr.co.englishlibrary.etc.services.Disposal">
+	<insert id="disposalBook" parameterType="String">
 		INSERT INTO disposal(
-			book_code,
-			disposal_bookname,
-			disposal_author,
-			genre_no,
-			disposal_publisher,
-			disposal_registerday
-		) VALUES (
-			#{bookCode},
-			#{disposalBookName},
-			#{disposalAuthor},
-			#{genreNo},
-			#{disposalPublisher},
+			disposal.book_code,
+			disposal.disposal_bookname,
+			disposal.disposal_author,
+			disposal.genre_no,
+			disposal.disposal_publisher,
+			disposal.disposal_registerday
+		)SELECT
+			book.book_code,
+			book.book_name,
+			book.book_author,
+			book.genre_no,
+			book.book_publisher,
 			sysdate()
-		)
+		FROM book
+		WHERE book.book_code=#{bookCode}
+
 	</insert>
 	<select id="selectAllLevel" resultType="kr.co.englishlibrary.etc.services.MemberLevel">
 		SELECT 
