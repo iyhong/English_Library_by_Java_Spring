@@ -36,19 +36,9 @@
  			state_no = #{bookState}
 		WHERE book_code = #{bookCode}
  	</update>
- 	<select id="selectBookState" parameterType="String" resultType="int">
- 		SELECT
- 			state_no
-		FROM book
-		WHERE book_code=#{bookCode}
- 	</select>
-	<update id="updateBookFirstDay" parameterType="String">
+	<update id="updateBookFirstDayTotalCount" parameterType="kr.co.englishlibrary.book.service.Book">
 		UPDATE book SET 
-			book_firstday = sysdate()
-		WHERE book_code = #{bookCode}
-	</update>
-	<update id="updateBookTotalCount" parameterType="Map">
-		UPDATE book SET 
+			book_firstday = sysdate(),
 			book_totalcount = #{bookTotalCount}
 		WHERE book_code = #{bookCode}
 	</update>

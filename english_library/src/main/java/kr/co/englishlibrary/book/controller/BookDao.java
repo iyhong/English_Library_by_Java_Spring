@@ -27,24 +27,16 @@ public class BookDao {
 		logger.debug("값:"+sql.selectOne("book.selectOneBookByCode", bookCode));
 		return sql.selectOne("book.selectOneBookByCode", bookCode);
 	}
+	//도서정보 수정
+	public int updateBookFirstDayTotalCount(Book book){
+		return sql.update("book.updateBookFirstDayTotalCount", book);
+	}
 	//도서정보수정(state 도서가능,도서불가,폐기 세가지중 하나로 수정)
 	public int updateBookState(Map map){
 		logger.debug("updateBookState() 메서드 호출");
 		return sql.update("book.updateBookState", map);
 	}
-	//도서상태 조회
-	public int selectBookState(String bookCode){
-		logger.debug("selectBookState() 메서드 호출");
-		return sql.selectOne("book.selectBookState", bookCode);
-	}
-	//도서 firstday 변경
-	public int updateBookFirstDay(String bookCode){
-		return sql.update("book.updateBookFirstDay", bookCode);
-	}
-	//도서의 totalCount +1 해줌
-	public int updateBookTotalCount(Map map){
-		return sql.update("book.updateBookTotalCount", map);
-	}
+	//
 	//도서의 totalDay + 해줌
 	public int updateBookTotalDay(Map map){
 		return sql.update("book.updateBookTotalDay", map);

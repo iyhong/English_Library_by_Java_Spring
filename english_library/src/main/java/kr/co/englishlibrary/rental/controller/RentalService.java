@@ -34,8 +34,10 @@ public class RentalService {
 	public int addRental(Rental rental,String libraryId){
 		logger.debug("addRental 메서드 호출");
 		int rowCount = 0;
+		//도서코드로 도서정보 가져옴
+		Book book = bookDao.selectOneBookByCode(rental.getBookCode());
 		//도서상태 조회
-		int stateNum = bookDao.selectBookState(rental.getBookCode());
+		int stateNum = book.getStateNo();
 		logger.debug("stateNum:"+stateNum);
 		//도서상태가 1이아니면(즉 대출가능상태가 아닌경우) -1값을 리턴
 		if(stateNum!=1){
@@ -60,27 +62,23 @@ public class RentalService {
 		logger.debug("rentalEnd:"+rental.getRentalEnd());
 		rowCount += rentalDao.insertRental(rental);
 		
-		//도서코드로 도서정보 가져옴
-		Book book = bookDao.selectOneBookByCode(rental.getBookCode());
 		logger.debug("bookFirstDay:"+book.getBookFirstDay());
-		//도서 firstday 가 null이면 오늘날짜 등록해줌
+		//도서 firstday 가 null이면 오늘날짜 book에 담는다.
 		if(book.getBookFirstDay() == null){
-			bookDao.updateBookFirstDay(rental.getBookCode());
+			book.setBookFirstDay(new Date().toString());
 		}
-		//도서의 totalCount 를 가져와서 +1 해주고 맵에 담아 보내준다.
-		int bookTotalCount = book.getBookTotalCount();
-		logger.debug("bookTotalCount"+bookTotalCount);
-		bookTotalCount ++;
-		Map<String, Object> map1 = new HashMap<String,Object>();
-		map1.put("bookCode", rental.getBookCode());
-		map1.put("bookTotalCount", bookTotalCount);
-		rowCount += bookDao.updateBookTotalCount(map1);
+		//도서의 totalCount 를 가져와서 +1 해주고 book에 담는다.
+		logger.debug("bookTotalCount"+book.getBookTotalCount());
+		book.setBookTotalCount(book.getBookTotalCount()+1);
+		//firstday와 totalcount를 수정한다.
+		rowCount += bookDao.updateBookFirstDayTotalCount(book);
 		
-		//도서코드와 도서상태를 맵에 담아 도서상태를 수정해준다.
+		//도서코드와 도서상태를 맵에 담아 도서상태를 수정해준다.(이미 짜여있는 쿼리 사용하기위해 따로 수정)
 		Map<String, Object> map2 = new HashMap<String,Object>();
 		map2.put("bookCode", rental.getBookCode());
 		map2.put("bookState", 2);
 		rowCount += bookDao.updateBookState(map2);
+		
 		return rowCount;
 	}
 	//대여정보 조회
@@ -93,9 +91,7 @@ public class RentalService {
 			return null;
 		}
 		logger.debug("returnCommand:"+returnCommand);
-		int rentalPayment = returnCommand.getRentalPayment();
 		String rentalStart = returnCommand.getRentalStart();
-		
 		//오늘날짜와 시작날짜의 차이를 구한다.
 		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date today=  new Date();

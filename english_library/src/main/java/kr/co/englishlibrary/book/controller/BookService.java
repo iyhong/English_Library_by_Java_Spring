@@ -52,11 +52,9 @@ public class BookService {
 		Book book = bookDao.selectOneBookByCode(bookCode);
 		logger.debug("book:"+book);
 		if(book==null){
-			rowCount = 0;
-			return rowCount;
+			return 0;
 		}else if(book.getStateNo()==3){
-			rowCount = -1;
-			return rowCount;
+			return -1;
 		}
 		//bookCode와 bookState를 map에 넣어준다.
 		Map<String, Object> map = new HashMap<String,Object>();
