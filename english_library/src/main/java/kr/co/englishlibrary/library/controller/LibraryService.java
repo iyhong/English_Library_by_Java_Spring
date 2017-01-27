@@ -7,9 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.co.englishlibrary.etc.services.Daos;
+import kr.co.englishlibrary.etc.services.Local;
 import kr.co.englishlibrary.library.service.Library;
-import kr.co.englishlibrary.services.Daos;
-import kr.co.englishlibrary.services.Local;
 
 @Service
 public class LibraryService {

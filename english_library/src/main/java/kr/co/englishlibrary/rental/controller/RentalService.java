@@ -14,9 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.englishlibrary.book.controller.BookDao;
 import kr.co.englishlibrary.book.service.Book;
+import kr.co.englishlibrary.etc.services.Daos;
 import kr.co.englishlibrary.rental.service.Rental;
 import kr.co.englishlibrary.rental.service.ReturnCommand;
-import kr.co.englishlibrary.services.Daos;
 
 @Service
 @Transactional

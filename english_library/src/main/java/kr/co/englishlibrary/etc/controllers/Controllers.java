@@ -1,4 +1,4 @@
-package kr.co.englishlibrary.controllers;
+package kr.co.englishlibrary.etc.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,8 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import kr.co.englishlibrary.services.Daos;
-import kr.co.englishlibrary.services.Member;
+import kr.co.englishlibrary.etc.services.Daos;
+import kr.co.englishlibrary.etc.services.Member;
 @Controller
 public class Controllers {
 	@Autowired

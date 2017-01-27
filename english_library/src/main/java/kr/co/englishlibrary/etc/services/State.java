@@ -1,4 +1,4 @@
-package kr.co.englishlibrary.services;
+package kr.co.englishlibrary.etc.services;
 
 public class State {
 	private int stateNo;

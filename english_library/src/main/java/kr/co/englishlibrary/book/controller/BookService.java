@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.englishlibrary.book.service.Book;
 import kr.co.englishlibrary.book.service.BookCommand;
-import kr.co.englishlibrary.services.Daos;
-import kr.co.englishlibrary.services.Disposal;
-import kr.co.englishlibrary.services.Genre;
+import kr.co.englishlibrary.etc.services.Daos;
+import kr.co.englishlibrary.etc.services.Disposal;
+import kr.co.englishlibrary.etc.services.Genre;
 
 @Service
 @Transactional

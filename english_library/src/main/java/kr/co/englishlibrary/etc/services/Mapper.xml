@@ -3,19 +3,19 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="mapper">
-	<select id="selectAllGenre" resultType="kr.co.englishlibrary.services.Genre">
+	<select id="selectAllGenre" resultType="kr.co.englishlibrary.etc.services.Genre">
 		SELECT
 			genre_no as genreNo,
 			genre_name as genreName
 		FROM genre
 	</select>
-	<select id="selectAllLocal" resultType="kr.co.englishlibrary.services.Local">
+	<select id="selectAllLocal" resultType="kr.co.englishlibrary.etc.services.Local">
 		SELECT
 			local_no as localNo,
 			local_name as localName
 		FROM local
 	</select>
-	<insert id="disposalBook" parameterType="kr.co.englishlibrary.services.Disposal">
+	<insert id="disposalBook" parameterType="kr.co.englishlibrary.etc.services.Disposal">
 		INSERT INTO disposal(
 			book_code,
 			disposal_bookname,
@@ -32,14 +32,14 @@
 			sysdate()
 		)
 	</insert>
-	<select id="selectAllLevel" resultType="kr.co.englishlibrary.services.MemberLevel">
+	<select id="selectAllLevel" resultType="kr.co.englishlibrary.etc.services.MemberLevel">
 		SELECT 
 			memberlevel_no as memberLevelNo,
 			memberlevel_name as memberLevelName,
 			price
 		FROM memberlevel
 	</select>
-	<insert id="insertMember" parameterType="kr.co.englishlibrary.services.Member">
+	<insert id="insertMember" parameterType="kr.co.englishlibrary.etc.services.Member">
 		INSERT INTO member(
 			member_name,
 			member_phone,
@@ -50,7 +50,7 @@
 			#{memberLevelNo}
 		)
 	</insert>
-	<select id="selectOneMember" parameterType="int" resultType="kr.co.englishlibrary.services.Member">
+	<select id="selectOneMember" parameterType="int" resultType="kr.co.englishlibrary.etc.services.Member">
 		SELECT
 			member_id as memberId
 		FROM member

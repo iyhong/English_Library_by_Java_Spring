@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import kr.co.englishlibrary.book.service.BookCommand;
-import kr.co.englishlibrary.services.Genre;
+import kr.co.englishlibrary.etc.services.Genre;
 
 @Controller
 public class BookController {
