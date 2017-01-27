@@ -67,7 +67,7 @@ public class RentalService {
 		rowCount += rentalDao.insertRental(rental);
 
 		logger.debug("bookFirstDay:" + book.getBookFirstDay());
-		// 도서 firstday 가 null이면 오늘날짜로 수정
+		// 도서 firstday가 null이면 오늘날짜로 수정(null일때만 해야해서 쿼리를 합칠수가 없음)
 		if (book.getBookFirstDay() == null) {
 			bookDao.updateBookFirstDay(rental.getBookCode());
 		}
@@ -117,7 +117,7 @@ public class RentalService {
 		long diff = today.getTime() - startday.getTime();
 		long diffDays = (diff / (24 * 60 * 60 * 1000));
 		int diffDaysInt = (int) diffDays;
-		// totalday도 넘겨주기위해 담는다.
+		// totalday도 넘겨주기위해 담는다.(받아온 totalday에 반납시점에 대여일수를 더해줌서 보내준다)
 		returnCommand.setBookTotalDay(returnCommand.getBookTotalDay()+diffDaysInt);
 		logger.debug("diffDays:" + diffDays);
 		// 총요금 만들어서 넣어줌
@@ -134,9 +134,7 @@ public class RentalService {
 		int rowCount = 0;
 		// 대여상태를 반납으로 수정해준다.
 		rowCount += rentalDao.updateRentalState(returnCommand);
-
-		// 도서코드로 도서 totalday를 +해준다
-		logger.debug("bookTotalDay:" + returnCommand.getBookTotalDay());
+		// 히든으로 넘겨받은 totalday(+되있는)를 맵에담아 업데이트해준다.
 		Map<String, Object> map1 = new HashMap<String, Object>();
 		map1.put("bookCode", returnCommand.getBookCode());
 		map1.put("bookTotalDay", returnCommand.getBookTotalDay());
