@@ -118,7 +118,7 @@ public class RentalService {
 		long diffDays = (diff / (24 * 60 * 60 * 1000));
 		int diffDaysInt = (int) diffDays;
 		// totalday도 넘겨주기위해 담는다.
-		returnCommand.setBookTotalDay(diffDaysInt);
+		returnCommand.setBookTotalDay(returnCommand.getBookTotalDay()+diffDaysInt);
 		logger.debug("diffDays:" + diffDays);
 		// 총요금 만들어서 넣어줌
 		returnCommand.setTotalPrice(returnCommand.getMemberLevelPrice() * diffDaysInt);

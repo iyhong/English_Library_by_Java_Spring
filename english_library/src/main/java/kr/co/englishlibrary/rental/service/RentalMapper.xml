@@ -33,7 +33,8 @@
 			member.member_name as memberName,
 			rental_payment as rentalPayment,
 			rental_start as rentalStart,
-			memberlevel.price as memberLevelPrice
+			memberlevel.price as memberLevelPrice,
+			book.book_totalday as bookTotalDay
 		FROM rental
 		JOIN book ON rental.book_code=book.book_code
 		JOIN member ON rental.member_id=member.member_id
