@@ -80,7 +80,7 @@ $( document ).ready(function() {
 	        success : function(responseData){
 	            var data = JSON.parse(responseData);
 	            if(!data){
-	                alert("실패");
+	                alert("해당도서의 대여정보가 없습니다.");
 	                return false;
 	            }
 	            $("#bookName").val(data.bookName);
@@ -148,19 +148,19 @@ $( document ).ready(function() {
 						<button id="btn" type="button" class="btn btn-info">조회</button>
 					</div>
 					<div>
-						도서명: <input id="bookName" type="text" name="bookName" />
+						도서명: <input id="bookName" type="text" name="bookName" readonly="readonly"/>
 					</div>
 					<div>
-						회원이름: <input id="memberName" type="text" name="memberName" />
+						회원이름: <input id="memberName" type="text" name="memberName" readonly="readonly"/>
 					</div>
 					<div>
-						총요금: <input id="totalPrice" type="text" name="totalPrice" />
+						총요금: <input id="totalPrice" type="text" name="totalPrice" readonly="readonly"/>
 					</div>
 					<div>
-						받은금액: <input id="rentalPayment" type="text" name="rentalPayment" />
+						받은금액: <input id="rentalPayment" type="text" name="rentalPayment" readonly="readonly"/>
 					</div>
 					<div>
-						받을금액: <input id="willPay" type="text" name="willPay" />
+						받을금액: <input id="willPay" type="text" name="willPay" readonly="readonly"/>
 					</div>
 					<!-- <input type="submit" value="대여" />
 							<input type="reset"	value="초기화" /> -->

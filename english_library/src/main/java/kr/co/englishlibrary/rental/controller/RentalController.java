@@ -85,21 +85,7 @@ public class RentalController {
 	        HttpServletResponse response){
 		logger.debug("ajaxBookCode POST 메서드 호출");
 		ObjectMapper mapper = new ObjectMapper();
-		ReturnCommand returnCommand = new ReturnCommand();
-		
-		returnCommand = service.getOneRental(bookCode);
-		if(returnCommand == null){
-			
-			try {
-				response.getWriter().print(mapper.writeValueAsString(""));
-			} catch (JsonProcessingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		ReturnCommand returnCommand = service.getOneRental(bookCode);
 		//ajax요청에 응답
 		try {
 	        response.getWriter().print(mapper.writeValueAsString(returnCommand));
