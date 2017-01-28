@@ -1,6 +1,5 @@
 package kr.co.englishlibrary.rental.controller;
 
-
 import java.io.IOException;
 import java.net.URLEncoder;
 
@@ -28,90 +27,94 @@ import kr.co.englishlibrary.rental.service.ReturnCommand;
 public class RentalController {
 	@Autowired
 	private RentalService service;
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(RentalController.class);
-	//대여 폼
-	@RequestMapping(value="/bookRent",method=RequestMethod.GET)
-	public String bookRent(){
+
+	// 대여 폼
+	@RequestMapping(value = "/bookRent", method = RequestMethod.GET)
+	public String bookRent() {
 		logger.debug("bookRent GET 메서드 호출");
 		return "/jsp/rental";
 	}
-	//대여
-	@RequestMapping(value="/bookRent",method=RequestMethod.POST)
-	public String bookRent(Rental rental,Model model,HttpSession session){
+
+	// 대여
+	@RequestMapping(value = "/bookRent", method = RequestMethod.POST)
+	public String bookRent(Rental rental, Model model, HttpSession session) {
 		logger.debug("bookRent GET 메서드 호출");
-		logger.debug("rental:"+rental);
+		logger.debug("rental:" + rental);
 		String libraryId = (String) session.getAttribute("LIBRARYID");
-		int result = service.addRental(rental,libraryId);
-		if(result == -1){
-			model.addAttribute("message","해당도서는 대출불가합니다.");
+		int result = service.addRental(rental, libraryId);
+		if (result == -1) {
+			model.addAttribute("message", "해당도서는 대출불가합니다.");
 			return "/jsp/fail";
-		}else if(result == -2){
-			model.addAttribute("message","회원이 아닙니다 가입하세요.");
+		} else if (result == -2) {
+			model.addAttribute("message", "회원이 아닙니다 가입하세요.");
 			return "/jsp/fail";
-		}else if (result >0){
+		} else if (result > 0) {
 			logger.debug("대여 성공");
 			return "redirect:/bookRent";
-		}else{
+		} else {
 			logger.debug("대여 실패");
 			model.addAttribute("message", "도서대여에 실패하였습니다.");
 			return "/jsp/fail";
 		}
 	}
-	//반납 폼
-	@RequestMapping(value="/bookReturn",method=RequestMethod.GET)
-	public String bookReturn(){
+
+	// 반납 폼
+	@RequestMapping(value = "/bookReturn", method = RequestMethod.GET)
+	public String bookReturn() {
 		logger.debug("bookRent GET 메서드 호출");
 		return "/jsp/return";
 	}
-	//반납
-	@RequestMapping(value="/bookReturn",method=RequestMethod.POST)
-	public String bookReturn(ReturnCommand returnCommand, Model model){
+
+	// 반납
+	@RequestMapping(value = "/bookReturn", method = RequestMethod.POST)
+	public String bookReturn(ReturnCommand returnCommand, Model model) {
 		logger.debug("bookRent POST 메서드 호출");
-		logger.debug("returnCommand:"+returnCommand);
+		logger.debug("returnCommand:" + returnCommand);
 		int result = service.returnBook(returnCommand);
-		if(result>1){
+		if (result > 1) {
 			logger.debug("반납 성공");
 			return "redirect:/bookReturn";
-		}else{
+		} else {
 			logger.debug("반납 실패");
 			model.addAttribute("message", "도서반납에 실패하였습니다.");
 			return "jsp/fail";
 		}
 	}
-	//ajax를 이용해 도서코드로 대여정보 조회
-	@RequestMapping(value="/getRental", method=RequestMethod.POST)
-	public @ResponseBody ReturnCommand ajaxBookCode(@RequestParam("bookCode") String bookCode,
-	        HttpServletResponse response){
+
+	// ajax를 이용해 도서코드로 대여정보 조회
+	@RequestMapping(value = "/getRental", method = RequestMethod.POST)
+	public @ResponseBody ReturnCommand ajaxBookCode(@RequestParam("bookCode") String bookCode, HttpServletResponse response) {
 		logger.debug("ajaxBookCode POST 메서드 호출");
-		//ObjectMapper mapper = new ObjectMapper();
+		ObjectMapper mapper = new ObjectMapper();
 		ReturnCommand returnCommand = service.getOneRental(bookCode);
-		logger.debug("returnCommand:"+returnCommand);
-		/*
+		logger.debug("returnCommand:" + returnCommand);
+/*
 		String sendData;
-        if(returnCommand != null){
-	        sendData = "{\"bookName\":\""+returnCommand.getBookName()
-	        +"\",\"memberName\":\""+returnCommand.getMemberName()
-	        +"\",\"totalPrice\":\""+returnCommand.getTotalPrice()
-	        +"\",\"rentalPayment\":\""+returnCommand.getRentalPayment()
-	        +"\",\"willPay\":\""+returnCommand.getWillPay()
-	        +"\",\"rentalCode\":\""+returnCommand.getRentalCode()
-	        +"\",\"bookTotalDay\":\""+returnCommand.getBookTotalDay()
-	        +"\"}";
-        }else{
-        	sendData = "null";
-        }
-        logger.debug("sendData:"+sendData);
-		//ajax요청에 응답
+		if (returnCommand != null) {
+			sendData = "{\"bookName\":\"" + returnCommand.getBookName() 
+			+ "\",\"memberName\":\"" + returnCommand.getMemberName() 
+			+ "\",\"totalPrice\":\"" + returnCommand.getTotalPrice()
+			+ "\",\"rentalPayment\":\"" + returnCommand.getRentalPayment() 
+			+ "\",\"willPay\":\"" + returnCommand.getWillPay() 
+			+ "\",\"rentalCode\":\"" + returnCommand.getRentalCode()
+			+ "\",\"bookTotalDay\":\"" + returnCommand.getBookTotalDay() 
+			+ "\"}";
+		} else {
+			sendData = "null";
+		}
+		logger.debug("sendData:" + sendData);
+		// ajax요청에 응답
 		try {
 			response.getWriter().print(sendData);
-	        //response.getWriter().print(mapper.writeValueAsString(returnCommand));
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
-	    */  
-        return returnCommand;
-		
+			// response.getWriter().print(mapper.writeValueAsString(returnCommand));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+*/
+		return returnCommand;
+
 	}
-	
+
 }
