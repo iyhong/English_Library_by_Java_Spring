@@ -86,9 +86,24 @@ public class RentalController {
 		logger.debug("ajaxBookCode POST 메서드 호출");
 		ObjectMapper mapper = new ObjectMapper();
 		ReturnCommand returnCommand = service.getOneRental(bookCode);
+        String sendData;
+        if(returnCommand != null){
+	        sendData = "{\"bookName\":\""+returnCommand.getBookName()
+	        +"\",\"memberName\":\""+returnCommand.getMemberName()
+	        +"\",\"totalPrice\":\""+returnCommand.getTotalPrice()
+	        +"\",\"rentalPayment\":\""+returnCommand.getRentalPayment()
+	        +"\",\"willPay\":\""+returnCommand.getWillPay()
+	        +"\",\"rentalCode\":\""+returnCommand.getRentalCode()
+	        +"\",\"bookTotalDay\":\""+returnCommand.getBookTotalDay()
+	        +"\"}";
+        }else{
+        	sendData = "null";
+        }
+        logger.debug("sendData:"+sendData);
 		//ajax요청에 응답
 		try {
-	        response.getWriter().print(mapper.writeValueAsString(returnCommand));
+			response.getWriter().print(sendData);
+	        //response.getWriter().print(mapper.writeValueAsString(returnCommand));
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }   
