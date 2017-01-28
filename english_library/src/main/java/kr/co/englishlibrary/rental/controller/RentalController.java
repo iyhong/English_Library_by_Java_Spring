@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -79,14 +80,15 @@ public class RentalController {
 		}
 	}
 	//ajax를 이용해 도서코드로 대여정보 조회
-	@RequestMapping(value="/getRental", method=RequestMethod.POST,
-			produces="text/plain; charset=UTF-8")
-	public void ajaxBookCode(@RequestParam("bookCode") String bookCode,
+	@RequestMapping(value="/getRental", method=RequestMethod.POST)
+	public @ResponseBody ReturnCommand ajaxBookCode(@RequestParam("bookCode") String bookCode,
 	        HttpServletResponse response){
 		logger.debug("ajaxBookCode POST 메서드 호출");
-		ObjectMapper mapper = new ObjectMapper();
+		//ObjectMapper mapper = new ObjectMapper();
 		ReturnCommand returnCommand = service.getOneRental(bookCode);
-        String sendData;
+		logger.debug("returnCommand:"+returnCommand);
+		/*
+		String sendData;
         if(returnCommand != null){
 	        sendData = "{\"bookName\":\""+returnCommand.getBookName()
 	        +"\",\"memberName\":\""+returnCommand.getMemberName()
@@ -106,7 +108,9 @@ public class RentalController {
 	        //response.getWriter().print(mapper.writeValueAsString(returnCommand));
 	    } catch (IOException e) {
 	        e.printStackTrace();
-	    }   
+	    }
+	    */  
+        return returnCommand;
 		
 	}
 	

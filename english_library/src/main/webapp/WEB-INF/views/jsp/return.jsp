@@ -77,8 +77,8 @@ $( document ).ready(function() {
 	        url : getContextPath()+"/getRental",
 	        type: "POST",
 	        data : { "bookCode" : $("#bookCode").val() },
-	        success : function(responseData){
-	            var data = JSON.parse(responseData);
+	        success : function(data){
+	            //var data = JSON.parse(responseData);
 	            if(!data){
 	                alert("해당도서의 대여정보가 없습니다.");
 	                return false;
