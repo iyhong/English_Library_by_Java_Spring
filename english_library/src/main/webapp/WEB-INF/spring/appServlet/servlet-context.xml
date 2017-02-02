@@ -20,6 +20,9 @@
 
 	<mvc:interceptors>
 		<mvc:interceptor>
+			<!-- 여러개 컨트롤러 추가 가능 -->
+			<!-- <mvc:mapping path="/admin_write"/> <mvc:mapping path="/admin_update"/> 
+				<mvc:mapping path="/admin_delete"/> . . . -->
 			<mvc:mapping path="/main" />
 			<mvc:mapping path="/bookAdd" />
 			<mvc:mapping path="/bookDisposal" />
@@ -27,9 +30,6 @@
 			<mvc:mapping path="/bookReturn" />
 			<mvc:mapping path="/memberAdd" />
 			
-			<!-- 여러개 컨트롤러 추가 가능 -->
-			<!-- <mvc:mapping path="/admin_write"/> <mvc:mapping path="/admin_update"/> 
-				<mvc:mapping path="/admin_delete"/> . . . -->
 			<!-- 로그인체크 인터셉터 클래스 -->
 			<bean class="kr.co.englishlibrary.interceptor.Interceptor" />
 		</mvc:interceptor>
