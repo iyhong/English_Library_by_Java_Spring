@@ -18,6 +18,24 @@
 		up static resources in the ${webappRoot}/resources directory -->
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/main" />
+			<mvc:mapping path="/bookAdd" />
+			<mvc:mapping path="/bookDisposal" />
+			<mvc:mapping path="/bookRent" />
+			<mvc:mapping path="/bookReturn" />
+			<mvc:mapping path="/memberAdd" />
+			
+			<!-- 여러개 컨트롤러 추가 가능 -->
+			<!-- <mvc:mapping path="/admin_write"/> <mvc:mapping path="/admin_update"/> 
+				<mvc:mapping path="/admin_delete"/> . . . -->
+			<!-- 로그인체크 인터셉터 클래스 -->
+			<bean class="kr.co.englishlibrary.interceptor.Interceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/views directory -->
 	
