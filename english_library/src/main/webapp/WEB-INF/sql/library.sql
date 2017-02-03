@@ -34,22 +34,25 @@ CREATE TABLE IF NOT EXISTS `book` (
   CONSTRAINT `FK__genre` FOREIGN KEY (`genre_no`) REFERENCES `genre` (`genre_no`),
   CONSTRAINT `FK__library` FOREIGN KEY (`library_id`) REFERENCES `library` (`library_id`),
   CONSTRAINT `FK__state` FOREIGN KEY (`state_no`) REFERENCES `state` (`state_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
--- Dumping data for table library.book: ~10 rows (대략적)
+-- Dumping data for table library.book: ~5 rows (대략적)
 /*!40000 ALTER TABLE `book` DISABLE KEYS */;
 INSERT INTO `book` (`book_code`, `library_id`, `state_no`, `genre_no`, `book_name`, `book_author`, `book_publisher`, `book_firstday`, `book_totalday`, `book_totalcount`) VALUES
-	(1, 'l01', 3, 1, 'java basic', '박성환', '스마트정보교육원', NULL, 0, 0),
-	(2, 'l01', 1, 1, 'java script', '임백준', '한빛미디어', NULL, 0, 0),
-	(3, '4', 1, 1, 'c++', '4', '4', NULL, 0, 0),
-	(4, '4', 2, 2, 'node.js', '1', '1', '2017-01-26 17:28:06', 0, 1),
-	(5, '4', 2, 1, '12', '12', '12', '2017-01-26 17:08:50', 22, 2),
-	(6, '4', 1, 2, 'aaa', 'aa', 'aa', NULL, 0, 0),
+	(5, '4', 2, 2, 'node.js', '1', '1', '2017-01-26 17:28:06', 0, 1),
+	(6, '4', 2, 2, 'aaa', 'aa', 'aa', '2017-02-03 15:49:43', 0, 1),
 	(7, '4', 1, 2, 'ff', 'ff', 'ff', NULL, 0, 0),
 	(8, '4', 1, 4, 'gogo', 'nana', 'ju', NULL, 0, 0),
-	(9, '4', 1, 3, 'asdf', 'afd', 'asdf', '2017-01-26 17:25:10', 2, 1),
 	(10, '1', 1, 1, 'umin', 'umin', 'umin', '2017-01-26 17:33:08', 7, 1);
 /*!40000 ALTER TABLE `book` ENABLE KEYS */;
+
+
+-- 이벤트 library의 구조를 덤프합니다. clone_evnet
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` EVENT `clone_evnet` ON SCHEDULE EVERY 1 SECOND STARTS '2017-02-03 16:53:33' ON COMPLETION NOT PRESERVE ENABLE DO update rental
+		set rental.book_code_clone = rental.book_code
+		where rental.book_code is not null//
+DELIMITER ;
 
 
 -- 테이블 library의 구조를 덤프합니다. disposal
@@ -64,12 +67,21 @@ CREATE TABLE IF NOT EXISTS `disposal` (
   PRIMARY KEY (`disposal_no`),
   KEY `FK_disposal_genre` (`genre_no`),
   CONSTRAINT `FK_disposal_genre` FOREIGN KEY (`genre_no`) REFERENCES `genre` (`genre_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
--- Dumping data for table library.disposal: ~1 rows (대략적)
+-- Dumping data for table library.disposal: ~10 rows (대략적)
 /*!40000 ALTER TABLE `disposal` DISABLE KEYS */;
 INSERT INTO `disposal` (`disposal_no`, `book_code`, `disposal_bookname`, `disposal_author`, `genre_no`, `disposal_publisher`, `disposal_registerday`) VALUES
-	(15, '1', 'java basic', '박성환', 1, '스마트정보교육원', '2017-01-26 17:28:31');
+	(15, '1', 'java basic', '박성환', 1, '스마트정보교육원', '2017-01-26 17:28:31'),
+	(16, '9', '1', '1', 1, '1', '2017-02-03 15:42:11'),
+	(17, '12', '1', '1', 1, '1', '2017-02-03 15:42:11'),
+	(18, '13', '1', '1', 1, '1', '2017-02-03 15:42:11'),
+	(19, '14', '1', '1', 1, '1', '2017-02-03 15:42:11'),
+	(20, '15', '1', '1', 1, '1', '2017-02-03 15:42:11'),
+	(22, '16', '1', '1', 1, '1', '2017-02-03 15:42:11'),
+	(23, '17', '12', '12', 1, '12', '2017-02-03 15:54:46'),
+	(24, '19', 'java basic', '박성환', 1, '스마트정보교육원', '2017-01-26 17:28:31'),
+	(25, '4', 'node.js', '1', 2, '1', '2017-02-03 16:57:50');
 /*!40000 ALTER TABLE `disposal` ENABLE KEYS */;
 
 
@@ -103,9 +115,9 @@ END//
 DELIMITER ;
 
 
--- 이벤트 library의 구조를 덤프합니다. ev
+-- 이벤트 library의 구조를 덤프합니다. disposal_event
 DELIMITER //
-CREATE DEFINER=`root`@`localhost` EVENT `ev` ON SCHEDULE EVERY 3 SECOND STARTS '2017-02-02 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO DELETE book FROM book, disposal WHERE book.book_code=disposal.book_code//
+CREATE DEFINER=`root`@`localhost` EVENT `disposal_event` ON SCHEDULE EVERY 1 DAY STARTS '2017-02-03 16:31:01' ON COMPLETION NOT PRESERVE ENABLE DO delete book from book, disposal where book.book_code = disposal.book_code//
 DELIMITER ;
 
 
@@ -205,23 +217,21 @@ INSERT INTO `memberlevel` (`memberlevel_no`, `memberlevel_name`, `price`) VALUES
 -- 테이블 library의 구조를 덤프합니다. payment
 CREATE TABLE IF NOT EXISTS `payment` (
   `payment_no` int(10) NOT NULL AUTO_INCREMENT,
-  `payment_name` varchar(50) NOT NULL,
-  `payment_value` int(10) NOT NULL,
+  `payment_name` varchar(50) DEFAULT NULL,
+  `payment_value` int(10) DEFAULT NULL,
   PRIMARY KEY (`payment_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
--- Dumping data for table library.payment: ~2 rows (대략적)
+-- Dumping data for table library.payment: ~0 rows (대략적)
 /*!40000 ALTER TABLE `payment` DISABLE KEYS */;
-INSERT INTO `payment` (`payment_no`, `payment_name`, `payment_value`) VALUES
-	(1, '일반회원', 500),
-	(2, '유료회원', 300);
 /*!40000 ALTER TABLE `payment` ENABLE KEYS */;
 
 
 -- 테이블 library의 구조를 덤프합니다. rental
 CREATE TABLE IF NOT EXISTS `rental` (
   `rental_code` varchar(50) NOT NULL,
-  `book_code` int(11) NOT NULL,
+  `book_code` int(11) DEFAULT NULL,
+  `book_code_clone` int(10) DEFAULT NULL,
   `rental_start` datetime NOT NULL,
   `rental_end` datetime DEFAULT NULL,
   `member_id` int(10) NOT NULL,
@@ -233,35 +243,20 @@ CREATE TABLE IF NOT EXISTS `rental` (
   KEY `FK_rental_rentalstate` (`rentalstate_no`),
   KEY `FK_rental_book` (`book_code`),
   KEY `auto_num` (`auto_num`),
-  CONSTRAINT `FK_rental_book` FOREIGN KEY (`book_code`) REFERENCES `book` (`book_code`),
+  CONSTRAINT `FK_rental_book_code` FOREIGN KEY (`book_code`) REFERENCES `book` (`book_code`) ON DELETE SET NULL,
   CONSTRAINT `FK_rental_member` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`),
   CONSTRAINT `FK_rental_rentalstate` FOREIGN KEY (`rentalstate_no`) REFERENCES `rentalstate` (`rentalstate_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 
--- Dumping data for table library.rental: ~21 rows (대략적)
+-- Dumping data for table library.rental: ~6 rows (대략적)
 /*!40000 ALTER TABLE `rental` DISABLE KEYS */;
-INSERT INTO `rental` (`rental_code`, `book_code`, `rental_start`, `rental_end`, `member_id`, `rental_payment`, `rentalstate_no`, `auto_num`) VALUES
-	('100028', 10, '2017-01-19 00:00:00', '2017-01-26 17:33:18', 1, 3500, 2, 29),
-	('400003', 1, '2017-01-24 00:00:00', '2017-01-26 14:27:01', 1, 1000, 2, 4),
-	('400005', 5, '2017-01-04 00:00:00', '2017-01-26 14:28:30', 1, 11000, 2, 6),
-	('400006', 6, '2017-01-04 00:00:00', '2017-01-26 15:20:16', 1, 11000, 2, 11),
-	('400011', 6, '2017-01-04 00:00:00', NULL, 1, 1, 1, 12),
-	('400012', 7, '2017-01-26 00:00:00', '2017-01-26 15:30:40', 1, 0, 2, 13),
-	('400014', 5, '2017-01-24 00:00:00', '2017-01-26 16:45:38', 1, 1000, 2, 15),
-	('400015', 5, '2017-01-04 00:00:00', '2017-01-26 16:56:56', 1, 11000, 2, 16),
-	('400016', 5, '2017-01-12 00:00:00', '2017-01-26 17:01:12', 1, 7000, 2, 17),
-	('400017', 5, '2017-01-26 00:00:00', '2017-01-26 17:08:41', 1, 0, 2, 18),
-	('400018', 5, '2017-01-25 00:00:00', '2017-01-26 17:11:58', 1, 500, 2, 19),
-	('400019', 5, '2017-01-24 00:00:00', '2017-01-26 17:13:18', 1, 1000, 2, 20),
-	('400020', 5, '2017-01-04 00:00:00', '2017-01-26 17:19:30', 1, 11000, 2, 21),
-	('400021', 5, '2017-01-12 00:00:00', '2017-01-26 17:20:25', 1, 7000, 2, 22),
-	('400022', 5, '2017-01-11 00:00:00', '2017-01-26 17:24:06', 1, 7500, 2, 23),
-	('400023', 9, '2017-01-24 00:00:00', '2017-01-26 17:25:24', 1, 1000, 2, 24),
-	('400024', 5, '2017-01-11 00:00:00', '2017-01-26 17:26:51', 1, 7500, 2, 25),
-	('400025', 5, '2017-01-04 00:00:00', '2017-01-26 17:27:46', 1, 11000, 2, 26),
-	('400026', 5, '2017-01-18 00:00:00', NULL, 1, 1, 1, 27),
-	('400027', 4, '2017-01-11 00:00:00', NULL, 1, 15, 1, 28),
-	('null00013', 5, '2017-01-25 00:00:00', '2017-01-26 16:44:47', 1, 500, 2, 14);
+INSERT INTO `rental` (`rental_code`, `book_code`, `book_code_clone`, `rental_start`, `rental_end`, `member_id`, `rental_payment`, `rentalstate_no`, `auto_num`) VALUES
+	('100029', NULL, 1, '2017-02-01 00:00:00', '2017-02-03 16:16:00', 1, 0, 2, 30),
+	('12313', 10, 10, '2017-01-19 00:00:00', '2017-01-26 17:33:18', 1, 3500, 2, 29),
+	('400005', 5, 5, '2017-01-04 00:00:00', '2017-01-26 14:28:30', 1, 11000, 1, 6),
+	('400006', 6, 6, '2017-01-04 00:00:00', '2017-01-26 15:20:16', 1, 11000, 1, 11),
+	('400012', 7, 7, '2017-01-26 00:00:00', '2017-01-26 15:30:40', 1, 0, 2, 13),
+	('400027', NULL, 4, '2017-01-11 00:00:00', '2017-02-03 16:57:38', 1, 11500, 2, 28);
 /*!40000 ALTER TABLE `rental` ENABLE KEYS */;
 
 
@@ -294,85 +289,6 @@ INSERT INTO `state` (`state_no`, `state_name`) VALUES
 	(2, '대여불가'),
 	(3, '폐기');
 /*!40000 ALTER TABLE `state` ENABLE KEYS */;
-
-
--- sample 의 데이터베이스 구조 덤핑
-CREATE DATABASE IF NOT EXISTS `sample` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `sample`;
-
-
--- 테이블 sample의 구조를 덤프합니다. clone
-CREATE TABLE IF NOT EXISTS `clone` (
-  `no` int(10) NOT NULL AUTO_INCREMENT,
-  `num` int(10) DEFAULT NULL,
-  `name` varchar(50) DEFAULT NULL,
-  `rd` datetime DEFAULT NULL,
-  PRIMARY KEY (`no`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
-
--- Dumping data for table sample.clone: ~25 rows (대략적)
-/*!40000 ALTER TABLE `clone` DISABLE KEYS */;
-INSERT INTO `clone` (`no`, `num`, `name`, `rd`) VALUES
-	(1, 193, '1', '2017-02-02 15:49:03'),
-	(2, 193, '1', '2017-02-02 15:49:03'),
-	(3, 155, '1', '2017-02-02 15:49:03'),
-	(4, 154, '1', '2017-02-02 15:49:03'),
-	(5, 196, '1', '2017-02-02 15:49:03'),
-	(6, 197, '1', '2017-02-02 15:49:03'),
-	(7, 198, '1', '2017-02-02 15:49:03'),
-	(8, 199, '1', '2017-02-02 15:49:03'),
-	(9, 200, '1', '2017-02-02 15:49:03'),
-	(10, 201, '1', '2017-02-02 15:49:03'),
-	(11, 202, '1', '2017-02-02 15:49:03'),
-	(12, 203, '1', '2017-02-02 15:49:04'),
-	(13, 204, '1', '2017-02-02 15:49:04'),
-	(14, 205, '1', '2017-02-02 15:49:04'),
-	(15, 206, '1', '2017-02-02 15:49:04'),
-	(16, 207, '1', '2017-02-02 15:49:04'),
-	(17, 208, '1', '2017-02-02 15:49:04'),
-	(18, 209, '1', '2017-02-02 15:49:04'),
-	(19, 210, '1', '2017-02-02 15:49:04'),
-	(20, 211, '1', '2017-02-02 15:49:04'),
-	(21, 212, '1', '2017-02-02 15:49:04'),
-	(22, 213, '1', '2017-02-02 15:49:04'),
-	(23, 214, '1', '2017-02-02 15:49:04'),
-	(24, 215, '1', '2017-02-02 15:49:04'),
-	(25, 216, '1', '2017-02-02 15:49:04');
-/*!40000 ALTER TABLE `clone` ENABLE KEYS */;
-
-
--- 이벤트 sample의 구조를 덤프합니다. e22
-DELIMITER //
-CREATE DEFINER=`root`@`localhost` EVENT `e22` ON SCHEDULE EVERY 3 SECOND STARTS '2017-02-02 16:41:39' ON COMPLETION NOT PRESERVE ENABLE DO delete test from test, clone where test.`no`=clone.num//
-DELIMITER ;
-
-
--- 테이블 sample의 구조를 덤프합니다. test
-CREATE TABLE IF NOT EXISTS `test` (
-  `no` int(10) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) DEFAULT NULL,
-  `rd` datetime DEFAULT NULL,
-  `check` int(10) DEFAULT '0',
-  PRIMARY KEY (`no`)
-) ENGINE=InnoDB AUTO_INCREMENT=217 DEFAULT CHARSET=utf8;
-
--- Dumping data for table sample.test: ~13 rows (대략적)
-/*!40000 ALTER TABLE `test` DISABLE KEYS */;
-INSERT INTO `test` (`no`, `name`, `rd`, `check`) VALUES
-	(156, '1', '2017-02-02 15:34:45', 1),
-	(157, '1', '2017-02-02 15:34:46', 1),
-	(158, '1', '2017-02-02 15:34:47', 1),
-	(159, '1', '2017-02-02 15:34:48', 1),
-	(178, '1', '2017-02-02 15:35:07', 1),
-	(179, '1', '2017-02-02 15:35:08', 1),
-	(180, '1', '2017-02-02 15:35:09', 1),
-	(181, '1', '2017-02-02 15:35:10', 1),
-	(182, '1', '2017-02-02 15:35:11', 1),
-	(188, '1', '2017-02-02 15:35:17', 1),
-	(189, '1', '2017-02-02 15:35:18', 1),
-	(190, '1', '2017-02-02 15:35:19', 1),
-	(191, '1', '2017-02-02 15:35:20', 1);
-/*!40000 ALTER TABLE `test` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

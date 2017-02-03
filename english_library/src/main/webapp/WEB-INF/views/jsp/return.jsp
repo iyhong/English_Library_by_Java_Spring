@@ -72,6 +72,7 @@ $( document ).ready(function() {
 	$("#btn").bind("click",function(){
 		if($('#bookCode').val()==""){
 			alert('값입력해요');
+			return;
 		}
 	    $.ajax({
 	        url : getContextPath()+"/getRental",
@@ -80,6 +81,13 @@ $( document ).ready(function() {
 	        success : function(data){
 	            //var data = JSON.parse(responseData);
 	            if(!data){
+		            $("#bookName").val("");
+		            $("#memberName").val("");
+		            $("#totalPrice").val("");
+		            $("#rentalPayment").val("");
+		            $("#willPay").val("");
+		            $("#rentalCode").val("");
+		            $("#bookTotalDay").val("");
 	                alert("해당도서의 대여정보가 없습니다.");
 	                return false;
 	            }
